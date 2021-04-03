@@ -16,46 +16,52 @@ import androidx.core.graphics.ColorUtils
 
 class GlowButton(context: Context, attrSet: AttributeSet?) : View(context, attrSet) {
 
-    private val maskPath = Path()
-    private var clickX : Float = width.div(2).toFloat()
-
-    private var clickY : Float = height.div(2).toFloat()
-    private var isClicked: Boolean = false
-
+    //BACKGROUND PROPERTIES
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var backgroundRectF = RectF()
-    private var mCornerRadius : Float = 0f
-    private var mBackgroundColor: Int = Color.GREEN
-    var mShadowColor: Int = Color.GREEN
-    private val backgroundPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
     private var shadowPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
-    private val ripplePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    var cornerRadius: Float = 0f
+    var backColor: Int = Color.CYAN
+    var shadowColor: Int = Color.CYAN
+    var backgroundPadding = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics)
 
-    private var mRippleColor: Int = 0
+    //RIPPLE EFFECT PROPERTIES
+    private val ripplePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var mRippleRadius = 100f
     private var mRippleAlpha: Int = 0
     private lateinit var rippleGradient : RadialGradient
+    var mRippleColor: Int = 0
 
+    //TEXT PROPERTIES
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG)
     private var mTextAlpha: Int = 255
-    private var mText: String = "Glow Button"
-    private var mTextStyle = 0 //Normal Text (1 = Bold, 2 = Italic)
-    private var mTextSize: Float
-    private var mTextColor: Int = Color.BLACK
-    private var mTextColorOriginal = mTextColor
+    private var mTextColorOriginal: Int = 0
     private var mTextX: Float = 0f
     private var mTextY: Float = 0f
+    var mText: String = "Glow Button"
+    var mTextStyle = 0 //Normal Text (1 = Bold, 2 = Italic)
+    var mTextSize: Float
+    var mTextColor: Int = Color.BLACK
+
+    private val maskPath = Path()
+
+    private var clickX : Float = width.div(2).toFloat()
+    private var clickY : Float = height.div(2).toFloat()
+    private var clicked: Boolean = false
+
+    private var rippleAnimatorSet: AnimatorSet? = null
+
 
     init {
 
         val attr : TypedArray = context.theme.obtainStyledAttributes(attrSet, R.styleable.GlowButton,0, 0)
 
         with(attr){
-            mCornerRadius = getDimension(R.styleable.GlowButton_gb_cornerRadius, resources.getDimension(R.dimen.cornerRadius))
-            mBackgroundColor = getInteger(R.styleable.GlowButton_gb_backgroundColor, Color.GREEN)
+            cornerRadius = getDimension(R.styleable.GlowButton_gb_cornerRadius, resources.getDimension(R.dimen.cornerRadius))
+            backColor = getInteger(R.styleable.GlowButton_gb_backgroundColor, Color.GREEN)
 
-            mShadowColor = getInteger(R.styleable.GlowButton_gb_glowColor, Color.GREEN)
-            mRippleColor = getInteger(R.styleable.GlowButton_gb_rippleColor, ColorUtils.blendARGB(mBackgroundColor, Color.BLACK, 0.5f))
+            shadowColor = getInteger(R.styleable.GlowButton_gb_glowColor, Color.GREEN)
+            mRippleColor = getInteger(R.styleable.GlowButton_gb_rippleColor, ColorUtils.blendARGB(backColor, Color.BLACK, 0.5f))
 
             mTextSize = getDimension(R.styleable.GlowButton_android_textSize, resources.getDimension(R.dimen.text_size))
             mTextStyle = getInt(R.styleable.GlowButton_android_textStyle, 0)
@@ -73,13 +79,14 @@ class GlowButton(context: Context, attrSet: AttributeSet?) : View(context, attrS
 
     override fun onDraw(canvas: Canvas?) {
 
-        backgroundRectF.set(backgroundPadding, backgroundPadding, width.minus(backgroundPadding), height.minus(backgroundPadding))
+        backgroundRectF.set(backgroundPadding + paddingStart, backgroundPadding + paddingStart,
+            width.minus(backgroundPadding).minus(paddingEnd), height.minus(backgroundPadding).minus(paddingBottom))
         with(backgroundPaint) {
-            color = mBackgroundColor
-            setShadowLayer(shadowPadding.times(1.2f), 0f, 0f, mShadowColor)
+            color = backColor
+            setShadowLayer(shadowPadding.times(1.2f), 0f, 0f, shadowColor)
         }
 
-        canvas?.drawRoundRect(backgroundRectF, mCornerRadius, mCornerRadius, backgroundPaint)
+        canvas?.drawRoundRect(backgroundRectF, cornerRadius, cornerRadius, backgroundPaint)
 
         with(textPaint) {
             color = mTextColor
@@ -94,19 +101,22 @@ class GlowButton(context: Context, attrSet: AttributeSet?) : View(context, attrS
 
         canvas?.drawText(mText, mTextX, mTextY, textPaint)
 
-        if(isClicked && isEnabled){
-
-            maskPath.addRoundRect(backgroundRectF, mCornerRadius, mCornerRadius, Path.Direction.CW)
-            canvas?.clipPath(maskPath)
-
-            with(ripplePaint) {
-                alpha = mRippleAlpha
-                shader = rippleGradient
-            }
-            canvas?.drawCircle(clickX, clickY, mRippleRadius.times(3), ripplePaint)
+        if(clicked && isEnabled){
+            drawRipples(canvas)
         }
     }
 
+    private fun drawRipples(canvas: Canvas?){
+        maskPath.addRoundRect(backgroundRectF, cornerRadius, cornerRadius, Path.Direction.CW)
+        canvas?.clipPath(maskPath)
+
+        with(ripplePaint) {
+            alpha = mRippleAlpha
+            shader = rippleGradient
+        }
+        canvas?.drawCircle(clickX, clickY, mRippleRadius.times(3), ripplePaint)
+
+    }
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         if(event != null && event.action == MotionEvent.ACTION_DOWN){
@@ -127,9 +137,13 @@ class GlowButton(context: Context, attrSet: AttributeSet?) : View(context, attrS
 
     private fun animateRipple() {
 
-        isClicked = true
+        if(rippleAnimatorSet != null){
+            rippleAnimatorSet!!.cancel()
+        }
 
-        val animDuration = 1000L
+        clicked = true
+
+        val animDuration = 1500L
 
         val ripple = ValueAnimator.ofFloat(1f, 300f)
         with(ripple){
@@ -147,15 +161,15 @@ class GlowButton(context: Context, attrSet: AttributeSet?) : View(context, attrS
             }
         }
 
-        val animationSet = AnimatorSet()
-        with(animationSet) {
+        rippleAnimatorSet = AnimatorSet()
+        with(rippleAnimatorSet!!) {
             interpolator = DecelerateInterpolator()
             duration = animDuration
             addListener(object : Animator.AnimatorListener{
                 override fun onAnimationStart(p0: Animator?) {
                 }
                 override fun onAnimationEnd(p0: Animator?) {
-                    isClicked = false
+                    clicked = false
                     invalidate()
                 }
                 override fun onAnimationCancel(p0: Animator?) {
@@ -163,8 +177,8 @@ class GlowButton(context: Context, attrSet: AttributeSet?) : View(context, attrS
                 override fun onAnimationRepeat(p0: Animator?) {
                 }
             })
-            animationSet.play(ripple).with(rippleAlpha)
-            animationSet.start()
+            playTogether(ripple, rippleAlpha)
+            start()
         }
     }
 

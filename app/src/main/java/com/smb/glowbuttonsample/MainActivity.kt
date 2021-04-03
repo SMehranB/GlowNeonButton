@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         val gb = GlowButton(this, null)
         gb.layoutParams = ViewGroup.LayoutParams(800, 300)
-        gb.mShadowColor = Color.MAGENTA
+        gb.shadowColor = Color.MAGENTA
         viewHolder.addView(gb)
 
 

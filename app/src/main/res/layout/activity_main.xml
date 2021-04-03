@@ -15,6 +15,7 @@
         android:layout_height="100dp"
         android:layout_margin="16dp"
         android:layout_gravity="center"
+        android:padding="8dp"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="24dp"
         android:textStyle="bold"
