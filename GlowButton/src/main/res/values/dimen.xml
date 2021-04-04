@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="text_size">20sp</dimen>
-    <dimen name="cornerRadius">10dp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="cornerRadius">100dp</dimen>
 
 </resources>

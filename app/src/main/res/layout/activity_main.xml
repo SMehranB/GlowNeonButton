@@ -11,27 +11,26 @@
 
     <com.smb.glowbutton.GlowButton
         android:id="@+id/glowButton"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="center"
-        android:padding="8dp"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="24dp"
+        android:textColor="@color/black"
+        android:textSize="16dp"
         android:textStyle="bold"
         app:gb_cornerRadius="50dp"
-        app:gb_glowColor="@color/teal_200"
-        app:gb_backgroundColor="@color/design_default_color_error"
+        app:gb_glowColor="#FFE600"
+        app:gb_backgroundColor="#FFE600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:text="sign in" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnEnableDisableAnimated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:textSize="16dp"
         android:text="Enable/Disable Animated"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

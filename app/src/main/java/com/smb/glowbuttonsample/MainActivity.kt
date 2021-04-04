@@ -2,7 +2,6 @@ package com.smb.glowbuttonsample
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.smb.glowbutton.GlowButton
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,8 +16,16 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val gb = GlowButton(this, null)
-        gb.layoutParams = ViewGroup.LayoutParams(800, 300)
-        gb.shadowColor = Color.MAGENTA
+//        gb.layoutParams = ViewGroup.LayoutParams(800, 300)
+//        gb.animationDuration = 1500
+//        gb.glowColor = Color.YELLOW
+//        gb.rippleColor = Color.CYAN
+        gb.textColor = Color.CYAN
+//        gb.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,24f, resources.displayMetrics))
+//        gb.backColor = Color.YELLOW
+//        gb.textStyle = Typeface.BOLD_ITALIC
+//        gb.cornerRadius =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,30f, resources.displayMetrics)
+
         viewHolder.addView(gb)
 
 
@@ -42,6 +49,10 @@ class MainActivity : AppCompatActivity() {
                 gb.enable()
             }
             enabled = !enabled
+        }
+
+        glowButton.setOnClickListener {
+//            Toast.makeText(this, "Glow Button Clicked!", Toast.LENGTH_SHORT).show()
         }
     }
 }
