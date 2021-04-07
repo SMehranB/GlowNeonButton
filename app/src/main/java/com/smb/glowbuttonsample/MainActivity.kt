@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
                 setTextColor(Color.WHITE)
                 text = "Am I Not Cool?!"
                 textStyle = Typeface.BOLD_ITALIC
+                rippleAnimationDuration = 1500
             }
 
             viewHolder.addView(myGlowButton)
