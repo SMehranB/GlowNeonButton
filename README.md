@@ -15,7 +15,7 @@
 •	Animated Enable/Disable, Enable/Disable
 
 
-## Screenshot and screen recording
+## Screen recording
  
  <img src="./screen_recording.gif" height="720">
  
