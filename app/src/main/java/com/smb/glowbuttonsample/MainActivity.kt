@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             myGlowButton.apply {
                 layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
                 glowAnimationDuration = 500
+                rippleAnimationDuration = 1500
                 backColor = Color.MAGENTA
                 glowColor = Color.YELLOW
                 rippleColor = Color.WHITE
@@ -32,7 +33,6 @@ class MainActivity : AppCompatActivity() {
                 setTextColor(Color.WHITE)
                 text = "Am I Not Cool?!"
                 textStyle = Typeface.BOLD_ITALIC
-                rippleAnimationDuration = 1500
             }
 
             viewHolder.addView(myGlowButton)
