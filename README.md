@@ -23,15 +23,17 @@
  
 ## Gradle
 ```
-dependencies {
-        implementation '-----------------------------'
-}
+	dependencies {
+	        implementation 'com.github.SMehranB:GlowButton:v1.0.0'
+	}
 ```
 ## Maven
 ```
-<dependency>
-    <???????????????????>
-</dependency>
+    <dependency>
+	    <groupId>com.github.SMehranB</groupId>
+	    <artifactId>GlowButton</artifactId>
+	    <version>v1.0.0</version>
+	</dependency>
  ```
 # Use
  
@@ -46,12 +48,12 @@ GlowButton with custom params:
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="8dp"
     android:text="Sample one"
-    android:textColor="@color/black" //Default color is Black
+    android:textColor="@color/black"
     android:textSize="24dp" //Default size is 16dp (because I don't like sp. Don't judge me!)
     app:gb_rippleColor="@color/purple_500" //Default ripple color is a darker shade of the background color (you think you are good at UI design? Change it!)
-    app:gb_rippleAnimationDuration="1500" //Default duration is 1500
-    app:gb_glowAnimationDuration="500" //Default duration is 500
-    app:gb_rippleEnabled="true" //Default value is true (because who doesn't want ripples?!)
+    app:gb_rippleAnimationDuration="1500"
+    app:gb_glowAnimationDuration="500"
+    app:gb_rippleEnabled="true" //Default value is true (because who doesn't like ripples?!)
     app:gb_backgroundColor="#FFE600" 
     app:gb_cornerRadius="10dp" // By default, the button has completely round corners 
     app:gb_glowColor="#FFE600" /> //Default value is the same color as the background (becasue...logic!)
