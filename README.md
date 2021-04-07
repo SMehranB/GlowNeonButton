@@ -23,17 +23,17 @@
  
 ## Gradle
 ```
-	dependencies {
-	        implementation 'com.github.SMehranB:GlowButton:v1.0.0'
-	}
+dependencies {
+	 implementation 'com.github.SMehranB:GlowButton:v1.0.0'
+}
 ```
 ## Maven
 ```
-    <dependency>
-	    <groupId>com.github.SMehranB</groupId>
-	    <artifactId>GlowButton</artifactId>
-	    <version>v1.0.0</version>
-	</dependency>
+<dependency>
+	<groupId>com.github.SMehranB</groupId>
+	<artifactId>GlowButton</artifactId>
+	<version>v1.0.0</version>
+</dependency>
  ```
 # Use
  
