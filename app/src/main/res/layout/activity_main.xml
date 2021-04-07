@@ -16,34 +16,56 @@
         android:layout_margin="16dp"
         android:layout_gravity="center"
         android:textColor="@color/black"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:gb_cornerRadius="50dp"
+        android:textSize="20dp"
+        android:text="Sample one"
+        android:fontFamily="@font/smile"
+        android:textAllCaps="true"
+        app:gb_cornerRadius="10dp"
         app:gb_glowColor="#FFE600"
+        android:textStyle="bold"
         app:gb_backgroundColor="#FFE600"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.smb.glowbutton.GlowButton
+        android:id="@+id/btnGoToJava"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Goto Java"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        app:gb_glowColor="#0088FF"
+        app:gb_backgroundColor="#1994FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <Button
         android:id="@+id/btnEnableDisableAnimated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="8dp"
         android:textSize="16dp"
-        android:text="Enable/Disable Animated"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="Enable/Disable Animated" />
 
     <Button
         android:id="@+id/btnEnableDisable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Enable/Disable"
-        app:layout_constraintBottom_toTopOf="@+id/btnEnableDisableAnimated"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_margin="8dp"
+        android:text="Enable/Disable" />
+
+    <Button
+        android:id="@+id/btnFormat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="Format Glow Button" />
+
 
 </LinearLayout>

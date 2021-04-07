@@ -2,6 +2,5 @@
 <resources>
 
     <dimen name="text_size">16sp</dimen>
-    <dimen name="cornerRadius">100dp</dimen>
 
 </resources>
