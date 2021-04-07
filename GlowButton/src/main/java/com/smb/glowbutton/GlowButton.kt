@@ -24,8 +24,8 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
     private val maskPath = Path()
 
-    private var touchX : Float = width.div(2).toFloat()
-    private var touchY : Float = height.div(2).toFloat()
+    private var touchX : Float = 0f
+    private var touchY : Float = 0f
     private var clicked: Boolean = false
 
     private var rippleAnimatorSet: AnimatorSet? = null
@@ -37,7 +37,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
     private var backgroundPadding: Float = dpToPixel(16)
     private var glowRadius: Float = dpToPixel(16)
     var glowAnimationDuration: Long = 500L
-
     var cornerRadius: Float = 0f
         set(value) {
             field = value
@@ -52,7 +51,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
 
     @ColorInt
-    var glowColor: Int = Color.GREEN
+    var glowColor: Int = 0
         set(value) {
             field = value
             invalidate()
@@ -105,9 +104,9 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         with(attr){
 
             //retrieving background attributes
-            cornerRadius = getDimension(R.styleable.GlowButton_gb_cornerRadius, dpToPixel(30))
+            cornerRadius = getDimension(R.styleable.GlowButton_gb_cornerRadius, dpToPixel(100))
             backColor = getInteger(R.styleable.GlowButton_gb_backgroundColor, Color.GREEN)
-            glowColor = getInteger(R.styleable.GlowButton_gb_glowColor, Color.GREEN)
+            glowColor = getInteger(R.styleable.GlowButton_gb_glowColor, backColor)
             glowAnimationDuration = getInteger(R.styleable.GlowButton_gb_glowAnimationDuration, 500).toLong()
 
             //retrieving ripple effect attributes

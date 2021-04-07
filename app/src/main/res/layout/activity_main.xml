@@ -1,71 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/viewHolder"
-    android:orientation="vertical"
     android:background="@color/black"
     tools:context=".MainActivity">
 
-    <com.smb.glowbutton.GlowButton
-        android:id="@+id/glowButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:text="Sample one"
-        android:fontFamily="@font/smile"
-        android:textAllCaps="true"
-        app:gb_cornerRadius="10dp"
-        app:gb_glowColor="#FFE600"
-        android:textStyle="bold"
-        app:gb_backgroundColor="#FFE600"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnableDisableAnimated"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <com.smb.glowbutton.GlowButton
-        android:id="@+id/btnGoToJava"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Goto Java"
-        android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:textSize="16dp"
-        android:textStyle="bold"
-        app:gb_glowColor="#0088FF"
-        app:gb_backgroundColor="#1994FF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/viewHolder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.smb.glowbutton.GlowButton
+                android:id="@+id/btnSampleOne"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Sample one"
+                android:textColor="@color/black"
+                android:textSize="24dp"
+                app:gb_backgroundColor="#FFE600"
+                app:gb_cornerRadius="10dp"
+                app:gb_glowColor="#FFE600" />
+
+            <com.smb.glowbutton.GlowButton
+                android:id="@+id/btnSampleTwo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Sample Two"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <com.smb.glowbutton.GlowButton
+                android:id="@+id/btnSampleThree"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Sample Three"
+                android:textSize="16dp"
+                android:textColor="#FF0000"
+                android:textStyle="bold|italic"
+                app:gb_backgroundColor="#00FFFF"
+                app:gb_cornerRadius="80dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
     <Button
         android:id="@+id/btnEnableDisableAnimated"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:textSize="16dp"
-        android:text="Enable/Disable Animated" />
+        android:text="Enable/Disable Animated"
+        app:layout_constraintBottom_toTopOf="@+id/btnEnableDisable"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btnEnableDisable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Enable/Disable" />
+        android:text="Enable/Disable"
+        app:layout_constraintBottom_toTopOf="@+id/btnAddNewGlowButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnFormat"
+        android:id="@+id/btnAddNewGlowButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Format Glow Button" />
+        android:text="Add New Glow Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

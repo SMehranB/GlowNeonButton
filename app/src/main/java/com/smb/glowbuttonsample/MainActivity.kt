@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.smb.glowbutton.GlowButton
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -19,70 +18,51 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        btnGoToJava.setOnClickListener {
-//            startActivity(Intent(this, JavaSample::class.java))
-        }
+        val existingGlowButtons = arrayListOf<GlowButton>(btnSampleOne, btnSampleTwo, btnSampleThree)
 
-        val gb = GlowButton(this)
-        gb.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,ViewGroup.LayoutParams.WRAP_CONTENT)
-//        gb.glowAnimationDuration = 1500
-//        gb.glowColor = Color.YELLOW
-//        gb.rippleColor = Color.CYAN
-//        gb.backColor = Color.MAGENTA
-//        gb.setTextColor(Color.RED)
-        gb.text = "Awesooooome"
-        gb.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,16f, resources.displayMetrics))
-//        gb.textStyle = Typeface.BOLD_ITALIC
-//        gb.textFont = R.font.smile
-        gb.cornerRadius =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,30f, resources.displayMetrics)
+        btnAddNewGlowButton.setOnClickListener {
 
-//        viewHolder.addView(gb)
-
-
-        btnFormat.setOnClickListener {
-
-            with(btnGoToJava){
-                text = "New Text for glow"
-                glowColor = Color.RED
-                rippleColor = Color.GREEN
-                backColor = Color.YELLOW
-                textStyle = Typeface.NORMAL
-                textFont = R.font.smile
-                cornerRadius = 10f
-                setTextColor(ContextCompat.getColor(this@MainActivity, R.color.purple_200))
-                setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,30f, resources.displayMetrics))
-                glowAnimationDuration = 2000
-                rippleAnimationDuration = 5000
+            val myGlowButton = GlowButton(this)
+            myGlowButton.apply {
+                layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+                glowAnimationDuration = 500
+                backColor = Color.MAGENTA
+                glowColor = Color.YELLOW
+                rippleColor = Color.WHITE
+                setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,16f, resources.displayMetrics))
+                setTextColor(Color.WHITE)
+                text = "Am I Not Cool?!"
+                textStyle = Typeface.BOLD_ITALIC
             }
+
+            viewHolder.addView(myGlowButton)
+            existingGlowButtons.add(myGlowButton)
         }
 
         btnEnableDisableAnimated.setOnClickListener {
             if(enabled){
-                glowButton.disableWithAnimation()
-                btnGoToJava.disableWithAnimation()
-                gb.disableWithAnimation()
+                existingGlowButtons.forEach {
+                    it.disableWithAnimation()
+                }
             }else{
-                glowButton.enableWithAnimation()
-                btnGoToJava.enableWithAnimation()
-                gb.enableWithAnimation()
+                existingGlowButtons.forEach {
+                    it.enableWithAnimation()
+                }
             }
             enabled = !enabled
         }
 
         btnEnableDisable.setOnClickListener {
             if(enabled){
-                glowButton.disable()
-                gb.disable()
-
+                existingGlowButtons.forEach {
+                    it.disable()
+                }
             }else{
-                glowButton.enable()
-                gb.enable()
+                existingGlowButtons.forEach {
+                    it.enable()
+                }
             }
             enabled = !enabled
-        }
-
-        glowButton.setOnClickListener {
-//            Toast.makeText(this, "Glow Button Clicked!", Toast.LENGTH_SHORT).show()
         }
     }
 }
