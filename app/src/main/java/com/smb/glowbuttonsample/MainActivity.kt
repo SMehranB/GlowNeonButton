@@ -3,7 +3,6 @@ package com.smb.glowbuttonsample
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.smb.glowbutton.GlowButton
@@ -29,7 +28,7 @@ class MainActivity : AppCompatActivity() {
                 backColor = Color.MAGENTA
                 glowColor = Color.YELLOW
                 rippleColor = Color.WHITE
-                setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,16f, resources.displayMetrics))
+                setTextSize(16)
                 setTextColor(Color.WHITE)
                 text = "Am I Not Cool?!"
                 textStyle = Typeface.BOLD_ITALIC

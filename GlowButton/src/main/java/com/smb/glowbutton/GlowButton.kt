@@ -315,8 +315,8 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
     }
 
-    fun setTextSize(textSize: Float){
-        mTextSize = textSize
+    fun setTextSize(textSize: Int){
+        mTextSize = dpToPixel(textSize)
         requestLayout()
     }
 
