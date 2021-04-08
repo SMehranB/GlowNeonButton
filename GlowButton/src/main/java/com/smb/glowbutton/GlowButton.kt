@@ -136,7 +136,8 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
         with(backgroundPaint) {
             color = backColor
-            setShadowLayer(glowRadius.times(1.3f), 0f, 0f, glowColor)
+            setShadowLayer(glowRadius.times(1f), 0f, 0f, glowColor)
+            setLayerType(LAYER_TYPE_SOFTWARE, this)
         }
 
         canvas?.drawRoundRect(backgroundRectF, cornerRadius, cornerRadius, backgroundPaint)
