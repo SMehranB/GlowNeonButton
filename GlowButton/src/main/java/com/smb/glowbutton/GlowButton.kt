@@ -12,12 +12,40 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.annotation.StyleRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.toBitmap
 
 class GlowButton @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null): View(context, attributeSet) {
+
+    private var textXOffSet: Float = 0f
+
+    @ColorInt
+    private var drawableTint: Int
+    private var drawablePadding: Float = dpToPixel(8)
+    private lateinit var drawableLeftBitmap: Bitmap
+    private lateinit var drawableRightBitmap: Bitmap
+    private var drawableStartX: Float = 0f
+    private var drawableEndX: Float = 0f
+    private var drawableY: Float = 0f
+    private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var drawableDimension = dpToPixel(25).toInt()
+    @DrawableRes
+    var drawableStart: Int = 0
+        set(value) {
+            field = value
+            requestLayout()
+        }
+    @DrawableRes
+    var drawableEnd: Int = 0
+        set(value) {
+            field = value
+            requestLayout()
+        }
 
     private val horizontalTextMargin: Float = dpToPixel(24)
     private val verticalTextMargin: Float = dpToPixel(16)
@@ -109,24 +137,28 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
             glowColor = getInteger(R.styleable.GlowButton_gb_glowColor, backColor)
             glowAnimationDuration = getInteger(R.styleable.GlowButton_gb_glowAnimationDuration, 500).toLong()
 
-            //retrieving ripple effect attributes
-            rippleColor = getInteger(R.styleable.GlowButton_gb_rippleColor, ColorUtils.blendARGB(backColor, Color.BLACK, 0.5f))
-            rippleAnimationDuration = getInteger(R.styleable.GlowButton_gb_rippleAnimationDuration, 1500).toLong()
-            rippleEnabled = getBoolean(R.styleable.GlowButton_gb_rippleEnabled, true)
+            //retrieving drawable attributes
+            drawableStart = getResourceId(R.styleable.GlowButton_android_drawableStart, 0)
+            drawableEnd = getResourceId(R.styleable.GlowButton_android_drawableEnd, 0)
+            drawablePadding = getDimension(R.styleable.GlowButton_android_drawablePadding, dpToPixel(8))
+            drawableTint = getInteger(R.styleable.GlowButton_android_drawableTint, 0)
 
             //retrieving text attributes
             textStyle = getInt(R.styleable.GlowButton_android_textStyle, Typeface.NORMAL)
             mTextSize = getDimension(R.styleable.GlowButton_android_textSize, resources.getDimension(R.dimen.text_size))
             mTextColor = getInteger(R.styleable.GlowButton_android_textColor, Color.BLACK)
             textFont = getResourceId(R.styleable.GlowButton_android_fontFamily, 0)
-
             mTextColorOriginal = mTextColor
 
             text = getString(R.styleable.GlowButton_android_text) ?: "GLOW BUTTON"
 
+            //retrieving ripple effect attributes
+            rippleColor = getInteger(R.styleable.GlowButton_gb_rippleColor, ColorUtils.blendARGB(backColor, Color.BLACK, 0.5f))
+            rippleAnimationDuration = getInteger(R.styleable.GlowButton_gb_rippleAnimationDuration, 1500).toLong()
+            rippleEnabled = getBoolean(R.styleable.GlowButton_gb_rippleEnabled, true)
+
             recycle()
         }
-
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -141,6 +173,14 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
 
         canvas?.drawRoundRect(backgroundRectF, cornerRadius, cornerRadius, backgroundPaint)
+
+        if(drawableEnd != 0) {
+            canvas?.drawBitmap(drawableRightBitmap, drawableEndX, drawableY, drawablePaint)
+        }
+
+        if(drawableStart != 0) {
+            canvas?.drawBitmap(drawableLeftBitmap, drawableStartX, drawableY, drawablePaint)
+        }
 
         //Drawing text
         with(textPaint) {
@@ -162,8 +202,28 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
 
+        if(drawableStart != 0) {
+            val drawable = ContextCompat.getDrawable(context, drawableStart)!!
+            if (drawableTint != 0) {
+                drawable.setTint(drawableTint)
+            }
+            drawableLeftBitmap = drawable.toBitmap(drawableDimension, drawableDimension, Bitmap.Config.ARGB_8888)
+            drawableStartX = paddingStart + backgroundPadding + drawablePadding
+        }
+
+        if(drawableEnd != 0) {
+            val drawable = ContextCompat.getDrawable(context, drawableEnd)!!
+            if (drawableTint != 0) {
+                drawable.setTint(drawableTint)
+            }
+            drawableRightBitmap = drawable.toBitmap(drawableDimension, drawableDimension, Bitmap.Config.ARGB_8888)
+            drawableEndX = width - paddingEnd - backgroundPadding - drawablePadding - drawableDimension
+        }
+
+        drawableY = height.div(2f).minus(drawableDimension.div(2))
+
         val metrics = textPaint.fontMetrics
-        mTextX = width.div(2).toFloat() + paddingStart - paddingEnd
+        mTextX = width.div(2).toFloat() + paddingStart - paddingEnd + textXOffSet
         mTextY = height.div(2) - metrics.descent.plus(metrics.ascent).div(2) + paddingTop - paddingBottom
 
         super.onLayout(changed, left, top, right, bottom)
@@ -190,7 +250,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
 
         val width = textBound.width() + backgroundPadding.times(2) +
-                horizontalTextMargin.times(2) + paddingStart + paddingEnd
+                horizontalTextMargin.times(2) + paddingStart + paddingEnd + getDrawableMeasurements()
         val height = textBound.height() + backgroundPadding.times(2) +
                 verticalTextMargin.times(2) + paddingTop + paddingBottom
 
@@ -215,15 +275,38 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
     }
 
+    private fun getDrawableMeasurements(): Float {
+
+        var width = 0f
+        textXOffSet = 0f
+
+        if(drawableStart != 0 ){
+            width = width.plus(drawableDimension).plus(drawablePadding)
+            textXOffSet = textXOffSet.plus(drawablePadding)
+        }
+
+        if(drawableEnd != 0){
+            width = width.plus(drawableDimension).plus(drawablePadding)
+            textXOffSet = textXOffSet.minus(drawablePadding)
+        }
+
+        return width
+    }
+
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         if(event?.action == MotionEvent.ACTION_DOWN){
-            touchX = event.x
-            touchY = event.y
 
-            performClick()
+            if(event.x in backgroundRectF.left..backgroundRectF.right && event.y in backgroundRectF.top..backgroundRectF.bottom){
 
-            return true
+                touchX = event.x
+                touchY = event.y
+
+                performClick()
+                return true
+            }
+
+            return false
         }
         return false
     }

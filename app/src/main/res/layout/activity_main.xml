@@ -27,19 +27,22 @@
 
             <com.smb.glowbutton.GlowButton
                 android:id="@+id/btnSampleOne"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:text="Sample one"
                 android:textColor="@color/black"
-                android:textSize="24dp"
+                android:textSize="16dp"
+                android:drawableEnd="@drawable/baseline_face_24"
+                android:drawableStart="@drawable/baseline_face_24"
+                android:drawableTint="@color/purple_500"
+                android:drawablePadding="16dp"
                 app:gb_rippleColor="@color/purple_500"
                 app:gb_rippleAnimationDuration="1500"
                 app:gb_glowAnimationDuration="500"
                 app:gb_rippleEnabled="true"
                 app:gb_backgroundColor="#FFE600"
-                app:gb_cornerRadius="10dp"
                 app:gb_glowColor="#FFE600" />
 
             <com.smb.glowbutton.GlowButton
@@ -73,9 +76,12 @@
 
     <Button
         android:id="@+id/btnEnableDisableAnimated"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:drawablePadding="26dp"
+        android:drawableTint="@color/white"
+        android:drawableLeft="@drawable/baseline_face_24"
         android:text="Enable/Disable Animated"
         app:layout_constraintBottom_toTopOf="@+id/btnEnableDisable"
         app:layout_constraintEnd_toEndOf="parent"
