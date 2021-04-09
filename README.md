@@ -4,20 +4,32 @@
  
 # What's new
  In version v1.1.0
+ 
  •  You can set drawableStart and drawableEnd
+ 
  •  You can adjust drawablePadding
+ 
  •  You can set drawableTing
+ 
  •  You can set disabledTextColor
+ 
  •  More Glow!
+ 
  
 ## Features!
 
  •	 Background Color, Glow Color, Glow Animation Duration
+ 
  •	 Corner Radius
+ 
  •	 Cool Ripple Effect, Ripple Color, Ripple Animation duration, Ripple Effect Enabled
+ 
  •	 Text Font, Text Style, Text Color, disabledTextColor
+ 
  •   Drawable Start and End, Drawable Tint, Drawable Padding
+ 
  •	 Animated Enable/Disable, Enable/Disable
+ 
 
 ## Screen recording
  
