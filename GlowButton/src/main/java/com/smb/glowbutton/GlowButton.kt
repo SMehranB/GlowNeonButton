@@ -23,31 +23,7 @@ import androidx.core.graphics.drawable.toBitmap
 class GlowButton @JvmOverloads constructor(context: Context, attributeSet: AttributeSet? = null): View(context, attributeSet) {
 
     private var textXOffSet: Float = 0f
-
-    @ColorInt
-    private var drawableTint: Int
-    private var drawablePadding: Float = dpToPixel(8)
-    private lateinit var drawableLeftBitmap: Bitmap
-    private lateinit var drawableRightBitmap: Bitmap
-    private var drawableStartX: Float = 0f
-    private var drawableEndX: Float = 0f
-    private var drawableY: Float = 0f
-    private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
-    private var drawableDimension = dpToPixel(25).toInt()
-    @DrawableRes
-    var drawableStart: Int = 0
-        set(value) {
-            field = value
-            requestLayout()
-        }
-    @DrawableRes
-    var drawableEnd: Int = 0
-        set(value) {
-            field = value
-            requestLayout()
-        }
-
-    private val horizontalTextMargin: Float = dpToPixel(24)
+    private val horizontalTextMargin: Float = dpToPixel(16)
     private val verticalTextMargin: Float = dpToPixel(16)
 
     private val maskPath = Path()
@@ -59,17 +35,30 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
     private var rippleAnimatorSet: AnimatorSet? = null
     private var enableDisableAnimatorSet: AnimatorSet? = null
 
+    private lateinit var drawableLeftBitmap: Bitmap
+    private lateinit var drawableRightBitmap: Bitmap
+    private var drawablePadding: Float = dpToPixel(8)
+    private var drawableStartX: Float = 0f
+    private var drawableEndX: Float = 0f
+    private var drawableY: Float = 0f
+    private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private var drawableDimension = dpToPixel(25).toInt()
+    private var drawableStart: Int = 0
+    private var drawableEnd: Int = 0
+    @ColorInt
+    var drawableTint: Int = 0
+    set(value) {
+        field = value
+        invalidate()
+    }
+
     //BACKGROUND PROPERTIES
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var backgroundRectF = RectF()
     private var backgroundPadding: Float = dpToPixel(16)
     private var glowRadius: Float = dpToPixel(16)
+    private var cornerRadius: Float = 0f
     var glowAnimationDuration: Long = 500L
-    var cornerRadius: Float = 0f
-        set(value) {
-            field = value
-            invalidate()
-        }
 
     @ColorInt
     var backColor: Int = Color.GREEN
@@ -102,7 +91,8 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
     private var mTextX: Float = 0f
     private var mTextY: Float = 0f
     private var mTextSize: Float = 0f
-    private var mTextColor: Int = 0
+    private var mTextColorCurrent: Int = 0
+    var disabledTextColor = Color.GRAY
 
     var text: String = "GLOW BUTTON"
         set(value) {
@@ -146,9 +136,10 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
             //retrieving text attributes
             textStyle = getInt(R.styleable.GlowButton_android_textStyle, Typeface.NORMAL)
             mTextSize = getDimension(R.styleable.GlowButton_android_textSize, resources.getDimension(R.dimen.text_size))
-            mTextColor = getInteger(R.styleable.GlowButton_android_textColor, Color.BLACK)
+            mTextColorCurrent = getInteger(R.styleable.GlowButton_android_textColor, Color.BLACK)
             textFont = getResourceId(R.styleable.GlowButton_android_fontFamily, 0)
-            mTextColorOriginal = mTextColor
+            disabledTextColor = getInteger(R.styleable.GlowButton_disabledTextColor, Color.GRAY)
+            mTextColorOriginal = mTextColorCurrent
 
             text = getString(R.styleable.GlowButton_android_text) ?: "GLOW BUTTON"
 
@@ -185,7 +176,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         //Drawing text
         with(textPaint) {
             typeface = Typeface.create(getTypeFace(), textStyle)
-            color = mTextColor
+            color = mTextColorCurrent
             alpha = mTextAlpha
             isLinearText = false
             textAlign = Paint.Align.CENTER
@@ -250,7 +241,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
 
         val width = textBound.width() + backgroundPadding.times(2) +
-                horizontalTextMargin.times(2) + paddingStart + paddingEnd + getDrawableMeasurements()
+                horizontalTextMargin.times(2) + paddingStart + paddingEnd + getDrawableMeasurements() + textXOffSet
         val height = textBound.height() + backgroundPadding.times(2) +
                 verticalTextMargin.times(2) + paddingTop + paddingBottom
 
@@ -325,7 +316,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         isEnabled = false
 
         mTextAlpha = 180
-        mTextColor = Color.GRAY
+        mTextColorCurrent = disabledTextColor
         glowRadius = 0f
 
         invalidate()
@@ -335,7 +326,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         isEnabled = true
 
         mTextAlpha = 255
-        mTextColor = mTextColorOriginal
+        mTextColorCurrent = mTextColorOriginal
         glowRadius = backgroundPadding
 
         invalidate()
@@ -352,9 +343,9 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
             mTextAlpha = it.animatedValue as Int
         }
 
-        val textColor = ObjectAnimator.ofArgb(mTextColorOriginal, Color.GRAY)
+        val textColor = ObjectAnimator.ofArgb(mTextColorOriginal, disabledTextColor)
         textColor.addUpdateListener {
-            mTextColor = it.animatedValue as Int
+            mTextColorCurrent = it.animatedValue as Int
         }
 
         val glow = ValueAnimator.ofFloat(glowRadius, 0f)
@@ -381,9 +372,9 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
             mTextAlpha = it.animatedValue as Int
         }
 
-        val textColor = ObjectAnimator.ofArgb(Color.GRAY, mTextColorOriginal)
+        val textColor = ObjectAnimator.ofArgb(disabledTextColor, mTextColorOriginal)
         textColor.addUpdateListener {
-            mTextColor = it.animatedValue as Int
+            mTextColorCurrent = it.animatedValue as Int
         }
 
         val glow = ValueAnimator.ofFloat(0f, backgroundPadding)
@@ -399,6 +390,26 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         }
     }
 
+    fun setCornerRadius(radius: Int){
+        cornerRadius = dpToPixel(radius)
+        invalidate()
+    }
+
+    fun setDrawableLeft(@DrawableRes drawableRes: Int){
+        drawableStart = drawableRes
+        requestLayout()
+    }
+
+    fun setDrawableRight(@DrawableRes drawableRes: Int){
+        drawableEnd = drawableRes
+        requestLayout()
+    }
+
+    fun setDrawablePadding(padding: Int){
+        drawablePadding = dpToPixel(padding)
+        requestLayout()
+    }
+
     fun setTextSize(textSize: Int){
         mTextSize = dpToPixel(textSize)
         requestLayout()
@@ -406,7 +417,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
     @JvmName("setTextColor_gb")
     fun setTextColor(@ColorInt color: Int){
-        mTextColor = color
+        mTextColorCurrent = color
         mTextColorOriginal = color
         invalidate()
     }

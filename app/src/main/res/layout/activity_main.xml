@@ -27,48 +27,87 @@
 
             <com.smb.glowbutton.GlowButton
                 android:id="@+id/btnSampleOne"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="8dp"
-                android:text="Sample one"
-                android:textColor="@color/black"
-                android:textSize="16dp"
-                android:drawableEnd="@drawable/baseline_face_24"
-                android:drawableStart="@drawable/baseline_face_24"
-                android:drawableTint="@color/purple_500"
-                android:drawablePadding="16dp"
-                app:gb_rippleColor="@color/purple_500"
-                app:gb_rippleAnimationDuration="1500"
-                app:gb_glowAnimationDuration="500"
-                app:gb_rippleEnabled="true"
-                app:gb_backgroundColor="#FFE600"
-                app:gb_glowColor="#FFE600" />
-
-            <com.smb.glowbutton.GlowButton
-                android:id="@+id/btnSampleTwo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Sample Two"
+                android:drawableStart="@drawable/outline_thumb_up_24"
+                android:drawableEnd="@drawable/outline_thumb_down_off_alt_20"
+                android:drawablePadding="50dp"
+                android:drawableTint="@color/black"
+                android:text="I'm confused"
+                android:textColor="@color/black"
                 android:textSize="16dp"
-                android:textStyle="bold" />
+                app:disabledTextColor="#808080"
+                app:gb_backgroundColor="#FFE600"
+                app:gb_cornerRadius="15dp"
+                app:gb_glowAnimationDuration="500"
+                app:gb_glowColor="#FFE600"
+                app:gb_rippleAnimationDuration="1500"
+                app:gb_rippleColor="@color/purple_500"
+                app:gb_rippleEnabled="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.smb.glowbutton.GlowButton
+                    android:id="@+id/btnSampleTwo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:drawableStart="@drawable/outline_shopping_cart_24"
+                    android:drawablePadding="16dp"
+                    android:drawableTint="#FF0000"
+                    android:text="Add to cart"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:gb_cornerRadius="0dp" />
+
+                <com.smb.glowbutton.GlowButton
+                    android:id="@+id/btnSampleThree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_weight="1"
+                    android:drawableEnd="@drawable/outline_edit_24"
+                    android:drawableTint="#E600FF"
+                    android:text="EDIT POST"
+                    android:textColor="#E600FF"
+                    android:textSize="16dp"
+                    android:textStyle="italic"
+                    app:gb_backgroundColor="#00FFFF"
+                    app:gb_cornerRadius="80dp" />
+
+            </LinearLayout>
 
             <com.smb.glowbutton.GlowButton
-                android:id="@+id/btnSampleThree"
-                android:layout_width="160dp"
-                android:layout_height="160dp"
+                android:id="@+id/btnSampleFour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginHorizontal="16dp"
+                android:layout_marginHorizontal="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Sample Three"
+                android:drawableStart="@drawable/baseline_face_24"
+                android:drawableEnd="@drawable/baseline_face_24"
+                android:drawableTint="@color/white"
+                android:text="Hope You Like This"
+                android:textColor="@color/white"
                 android:textSize="16dp"
-                android:textColor="#FF0000"
-                android:textStyle="bold|italic"
-                app:gb_backgroundColor="#00FFFF"
-                app:gb_cornerRadius="80dp" />
+                android:textStyle="bold"
+                app:disabledTextColor="#B5B5B5"
+                app:gb_backgroundColor="#F700FF"
+                app:gb_glowAnimationDuration="500"
+                app:gb_glowColor="#F700FF"
+                app:gb_rippleAnimationDuration="1500"
+                app:gb_rippleColor="@color/purple_500"
+                app:gb_rippleEnabled="true" />
 
         </LinearLayout>
 
@@ -76,12 +115,10 @@
 
     <Button
         android:id="@+id/btnEnableDisableAnimated"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:drawablePadding="26dp"
-        android:drawableTint="@color/white"
-        android:drawableLeft="@drawable/baseline_face_24"
         android:text="Enable/Disable Animated"
         app:layout_constraintBottom_toTopOf="@+id/btnEnableDisable"
         app:layout_constraintEnd_toEndOf="parent"
