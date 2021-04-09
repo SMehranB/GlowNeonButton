@@ -39,9 +39,9 @@
                 android:text="I'm confused"
                 android:textColor="@color/black"
                 android:textSize="16dp"
-                app:disabledTextColor="#808080"
                 app:gb_backgroundColor="#FFE600"
                 app:gb_cornerRadius="15dp"
+                app:gb_disabledTextColor="#808080"
                 app:gb_glowAnimationDuration="500"
                 app:gb_glowColor="#FFE600"
                 app:gb_rippleAnimationDuration="1500"
@@ -101,13 +101,25 @@
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:textStyle="bold"
-                app:disabledTextColor="#B5B5B5"
                 app:gb_backgroundColor="#F700FF"
+                app:gb_disabledTextColor="#B5B5B5"
                 app:gb_glowAnimationDuration="500"
                 app:gb_glowColor="#F700FF"
                 app:gb_rippleAnimationDuration="1500"
                 app:gb_rippleColor="@color/purple_500"
                 app:gb_rippleEnabled="true" />
+
+            <com.smb.glowbutton.NeonButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:nb_gradientFinish="#00C4FF"
+                app:nb_gradientStart="#55FF5D"
+                app:nb_drawablePadding="16dp"
+                app:nb_drawableStart="@drawable/outline_thumb_up_24"
+                app:nb_drawableEnd="@drawable/outline_thumb_up_24"
+                app:nb_drawableTint="#55FF5D"
+                app:nb_text="This Is My Button" />
 
         </LinearLayout>
 

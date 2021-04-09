@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <declare-styleable name="GlowButton">
 
         <attr name="android:text" format="string" />
         <attr name="android:textSize" format="dimension" />
         <attr name="android:textColor" format="color"/>
-        <attr name="disabledTextColor" format="color"/>
         <attr name="android:fontFamily" format="integer"/>
         <attr name="android:textStyle" format="enum">
             <enum name="normal" value="0" />
@@ -14,6 +13,7 @@
             <enum name="italic" value="2" />
             <enum name="bold_italic" value="3" />
         </attr>
+        <attr name="gb_disabledTextColor" format="color"/>
 
         <attr name="gb_cornerRadius" format="dimension"/>
         <attr name="gb_backgroundColor" format="color"/>
@@ -31,5 +31,30 @@
         <attr name="android:drawableTint" format="color"/>
 
     </declare-styleable>
-    
+
+    <declare-styleable name="NeonButton">
+
+        <attr name="nb_text" format="string" />
+        <attr name="nb_textSize" format="dimension" />
+        <attr name="nb_textColor" format="color"/>
+        <attr name="nb_fontFamily" format="integer"/>
+        <attr name="nb_textStyle" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="italic" value="2" />
+            <enum name="bold_italic" value="3" />
+        </attr>
+        <attr name="nb_disabledTextColor" format="color"/>
+
+        <attr name="nb_cornerRadius" format="dimension"/>
+        <attr name="nb_gradientStart" format="color"/>
+        <attr name="nb_gradientFinish" format="color"/>
+
+        <attr name="nb_drawableStart" format="reference"/>
+        <attr name="nb_drawableEnd" format="reference"/>
+        <attr name="nb_drawablePadding" format="dimension"/>
+        <attr name="nb_drawableTint" format="color"/>
+
+    </declare-styleable>
+
 </resources>

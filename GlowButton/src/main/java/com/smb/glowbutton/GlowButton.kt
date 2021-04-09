@@ -138,7 +138,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
             mTextSize = getDimension(R.styleable.GlowButton_android_textSize, resources.getDimension(R.dimen.text_size))
             mTextColorCurrent = getInteger(R.styleable.GlowButton_android_textColor, Color.BLACK)
             textFont = getResourceId(R.styleable.GlowButton_android_fontFamily, 0)
-            disabledTextColor = getInteger(R.styleable.GlowButton_disabledTextColor, Color.GRAY)
+            disabledTextColor = getInteger(R.styleable.GlowButton_gb_disabledTextColor, Color.GRAY)
             mTextColorOriginal = mTextColorCurrent
 
             text = getString(R.styleable.GlowButton_android_text) ?: "GLOW BUTTON"
