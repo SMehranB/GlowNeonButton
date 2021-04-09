@@ -35,13 +35,13 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
     private var rippleAnimatorSet: AnimatorSet? = null
     private var enableDisableAnimatorSet: AnimatorSet? = null
 
+    private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private lateinit var drawableLeftBitmap: Bitmap
     private lateinit var drawableRightBitmap: Bitmap
     private var drawablePadding: Float = dpToPixel(8)
     private var drawableStartX: Float = 0f
     private var drawableEndX: Float = 0f
     private var drawableY: Float = 0f
-    private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var drawableDimension = dpToPixel(25).toInt()
     private var drawableStart: Int = 0
     private var drawableEnd: Int = 0

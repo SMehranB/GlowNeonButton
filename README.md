@@ -3,7 +3,8 @@
 ## A cool glowing button with animated properties 
  
 # What's new
- In version v1.1.0
+ In version [![](https://jitpack.io/v/SMehranB/GlowButton.svg)](https://jitpack.io/#SMehranB/GlowButton)
+            
  
  •  You can set drawableStart and drawableEnd
  
@@ -49,7 +50,7 @@ allprojects {
 
 ```
 dependencies {
-	 implementation 'com.github.SMehranB:GlowButton:v1.1.0'
+	 implementation 'com.github.SMehranB:GlowButton:1.1.0'
 }
 ```
 ## Maven
@@ -57,7 +58,7 @@ dependencies {
 <dependency>
 	<groupId>com.github.SMehranB</groupId>
 	<artifactId>GlowButton</artifactId>
-	<version>v1.1.0</version>
+	<version>1.1.0</version>
 </dependency>
  ```
 # Use
