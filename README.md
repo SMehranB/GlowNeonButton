@@ -6,7 +6,7 @@
  In version v1.1.0
  •  You can set drawableStart and drawableEnd
  •  You can adjust drawablePadding
- •  You can set drawableTing
+ •  You can set drawableTint
  •  You can set disabledTextColor
  •  More Glow!
  

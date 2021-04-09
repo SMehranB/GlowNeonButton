@@ -395,12 +395,12 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         invalidate()
     }
 
-    fun setDrawableLeft(@DrawableRes drawableRes: Int){
+    fun setDrawableStart(@DrawableRes drawableRes: Int){
         drawableStart = drawableRes
         requestLayout()
     }
 
-    fun setDrawableRight(@DrawableRes drawableRes: Int){
+    fun setDrawableEnd(@DrawableRes drawableRes: Int){
         drawableEnd = drawableRes
         requestLayout()
     }

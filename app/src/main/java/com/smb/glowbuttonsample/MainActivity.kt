@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 setTextColor(Color.BLACK)
                 text = "Am I Not Cool?!"
                 disabledTextColor = Color.DKGRAY
-                setDrawableLeft(R.drawable.baseline_face_24)
+                setDrawableStart(R.drawable.baseline_face_24)
                 drawableTint = Color.BLACK
                 setDrawablePadding(16)
                 textStyle = Typeface.BOLD_ITALIC
