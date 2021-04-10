@@ -34,11 +34,11 @@
 
 ## Screen recording
  
+ <img src="./glow_button_recording.gif" height="100">    <img src="./neon_button_recording.gif" height="300">
  <img src="./screen_recording.gif" height="720">
  
 # Install
  
-## Gradle
 ```
 allprojects {
 	repositories {
@@ -47,6 +47,7 @@ allprojects {
 	}
 }
 ```
+## Gradle
 
 ```
 dependencies {
