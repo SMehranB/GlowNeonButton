@@ -25,14 +25,13 @@ class NeonButton : View {
         initializeAttributes(context, attributeSet)
     }
 
-
-    private var enableAnimationDuration: Int = 500
     private var textShadowRadius: Float = dpToPixel(5)
     private var textXOffSet: Float = 0f
     private val horizontalTextMargin: Float = dpToPixel(24)
     private val verticalTextMargin: Float = dpToPixel(16)
+    var enableAnimationDuration: Long = 500
 
-    var enableDisableAnimatorSet: AnimatorSet? = null
+    private var enableDisableAnimatorSet: AnimatorSet? = null
 
     private lateinit var backgroundGradient: LinearGradient
     private lateinit var strokeGradient: LinearGradient
@@ -56,11 +55,7 @@ class NeonButton : View {
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val strokeRectF: RectF = RectF()
     private var strokePadding = dpToPixel(16)
-    var cornerRadius: Float = 0f
-    set(value) {
-        field = value
-        invalidate()
-    }
+    private var cornerRadius: Float = 0f
 
     //DRAWABLE PROPERTIES
     private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -88,7 +83,7 @@ class NeonButton : View {
     private var mTextY: Float = 0f
     private var mTextSize: Float = 0f
     private var mTextColorCurrent: Int = 0
-    var disabledColor = Color.GRAY
+    var disabledStateColor = Color.GRAY
 
     var text: String = "NEON BUTTON"
         set(value) {
@@ -122,7 +117,7 @@ class NeonButton : View {
             shader = backgroundGradient
         }
 
-        canvas?.drawRoundRect(strokeRectF, dpToPixel(50), dpToPixel(50), backgroundPaint)
+        canvas?.drawRoundRect(strokeRectF, cornerRadius, cornerRadius, backgroundPaint)
 
         with(strokePaint) {
             style = Paint.Style.STROKE
@@ -132,8 +127,8 @@ class NeonButton : View {
             setShadowLayer(dpToPixel(16), 0f, 0f, Color.YELLOW)
         }
 
-        canvas?.drawRoundRect(strokeRectF, dpToPixel(50), dpToPixel(50), strokePaint)
-        canvas?.drawRoundRect(strokeRectF, dpToPixel(50), dpToPixel(50), strokePaint)
+        canvas?.drawRoundRect(strokeRectF, cornerRadius, cornerRadius, strokePaint)
+        canvas?.drawRoundRect(strokeRectF, cornerRadius, cornerRadius, strokePaint)
 
         if (drawableEnd != 0) {
             canvas?.drawBitmap(drawableRightBitmap, drawableEndX, drawableY, drawablePaint)
@@ -265,13 +260,18 @@ class NeonButton : View {
             mTextSize = getDimension(R.styleable.NeonButton_nb_textSize, resources.getDimension(R.dimen.text_size))
             mTextColorCurrent = getInteger(R.styleable.NeonButton_nb_textColor, 0)
             textFont = getResourceId(R.styleable.NeonButton_nb_fontFamily, 0)
-            disabledColor = getInteger(R.styleable.NeonButton_nb_disabledColor, Color.LTGRAY)
+            disabledStateColor = getInteger(R.styleable.NeonButton_nb_disabledStateColor, Color.LTGRAY)
             mTextColorOriginal = mTextColorCurrent
 
-            enableAnimationDuration = getInt(R.styleable.NeonButton_nb_enableAnimationDuration, 500)
+            enableAnimationDuration = getInt(R.styleable.NeonButton_nb_enableAnimationDuration, 500).toLong()
 
             recycle()
         }
+    }
+
+    fun setCornerRadius(radius: Int){
+        cornerRadius = dpToPixel(radius)
+        invalidate()
     }
 
     fun setDrawableStart(@DrawableRes drawableRes: Int){
@@ -304,8 +304,8 @@ class NeonButton : View {
     fun disable() {
         isEnabled = false
 
-        val startColor = ColorUtils.blendARGB(gradientStart, disabledColor, 0.7f)
-        val endColor = ColorUtils.blendARGB(gradientEnd, disabledColor, 0.7f)
+        val startColor = ColorUtils.blendARGB(gradientStart, disabledStateColor, 0.7f)
+        val endColor = ColorUtils.blendARGB(gradientEnd, disabledStateColor, 0.7f)
         setGradientParams(startColor, endColor)
         setDrawables(startColor, endColor)
 
@@ -331,8 +331,8 @@ class NeonButton : View {
 
         enableDisableAnimatorSet?.cancel()
 
-        val startColorTarget = ColorUtils.blendARGB(gradientStart, disabledColor, 0.7f)
-        val endColorTarget = ColorUtils.blendARGB(gradientEnd, disabledColor, 0.7f)
+        val startColorTarget = ColorUtils.blendARGB(gradientStart, disabledStateColor, 0.7f)
+        val endColorTarget = ColorUtils.blendARGB(gradientEnd, disabledStateColor, 0.7f)
 
         var startColorCur = gradientStart
         var endColorCur = gradientEnd
@@ -367,8 +367,8 @@ class NeonButton : View {
 
         enableDisableAnimatorSet?.cancel()
 
-        val startColorTarget = ColorUtils.blendARGB(gradientStart, disabledColor, 0.7f)
-        val endColorTarget = ColorUtils.blendARGB(gradientEnd, disabledColor, 0.7f)
+        val startColorTarget = ColorUtils.blendARGB(gradientStart, disabledStateColor, 0.7f)
+        val endColorTarget = ColorUtils.blendARGB(gradientEnd, disabledStateColor, 0.7f)
 
         var startColorCur = gradientStart
         var endColorCur = gradientEnd
@@ -392,7 +392,7 @@ class NeonButton : View {
 
         enableDisableAnimatorSet = AnimatorSet()
         with(enableDisableAnimatorSet!!) {
-            duration = enableAnimationDuration.toLong()
+            duration = enableAnimationDuration
             playTogether(glowEnd, glowStart)
             start()
         }

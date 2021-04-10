@@ -65,7 +65,7 @@ dependencies {
  
 ## XML
 
-GlowButton with custom params:
+### Glow Button
 ```xml
 <com.smb.glowbutton.GlowButton
     android:id="@+id/myGlowButton"
@@ -99,7 +99,28 @@ GlowButton with custom params:
 End-->
  ```
 
+### Neon Button
+```xml
+<com.smb.glowbutton.NeonButton
+    android:id="@+id/btnNeonOne"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:nb_cornerRadius="30dp"
+    app:nb_disabledStateColor="@android:color/darker_gray"
+    app:nb_drawableEnd="@drawable/outline_thumb_up_24"
+    app:nb_drawablePadding="32dp"
+    app:nb_drawableStart="@drawable/outline_thumb_up_24"
+    app:nb_enableAnimationDuration="500"
+    app:nb_gradientEnd="#26FF00"
+    app:nb_gradientStart="#16FFEC"
+    app:nb_text="A Neon Button with Gradient"
+    app:nb_textSize="16dp"
+    app:nb_textStyle="normal" />
+```
+
 ## Kotlin
+### Glow Button 
 ```kotlin
 val myGlowButton = GlowButton(this)
 val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
@@ -119,19 +140,44 @@ myGlowButton.apply {
     setDrawableLeft(R.drawable.baseline_face_24)
     drawableTint = Color.BLACK
     setDrawablePadding(16)
-    text = "Am I Not Cool?!" //There is no `AllCaps` attribute, so do it yourself. Don't be lazy!
+    text = "I Am A Glow Button" //There is no `AllCaps` attribute, so do it yourself. Don't be lazy!
     textStyle = Typeface.BOLD_ITALIC
 }
 
 viewHolder.addView(myGlowButton)
 ```
 
-## Functions
+### Neon Button
 ```kotlin
-myGlowButton.enableWithAnimation()
-myGlowButton.disableWithAnimation()
-myGlowButton.enable()
-myGlowButton.disable()
+val myNeonButton = NeonButton(this)
+val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
+    ConstraintLayout.LayoutParams.WRAP_CONTENT)
+params.setMargins(16, 8, 16, 0)
+myNeonButton.apply {
+    layoutParams = params
+    setCornerRadius(16)
+    enableAnimationDuration = 500L
+    text = "I Am A Neon Button"
+    setTextSize(16)
+    disabledStateColor = Color.GRAY
+    drawableTint = Color.YELLOW
+    setDrawableStart(R.drawable.baseline_face_24)
+    setDrawableEnd(R.drawable.baseline_face_24)
+    setDrawablePadding(24)
+    textStyle = Typeface.ITALIC
+    gradientStart = Color.MAGENTA
+    gradientEnd = Color.MAGENTA
+}
+
+viewHolder.addView(myNeonButton)
+```
+
+Both GlowButton and NeonButton have the following functions:
+```kotlin
+mButton.enableWithAnimation()
+mButton.disableWithAnimation()
+mButton.enable()
+mButton.disable()
 ```
 
 ## 📄 License

@@ -94,11 +94,11 @@
                 android:layout_marginTop="8dp"
                 android:drawableStart="@drawable/baseline_face_24"
                 android:drawableEnd="@drawable/baseline_face_24"
+                android:drawablePadding="16dp"
                 android:drawableTint="@color/white"
                 android:text="Hope You Like This"
                 android:textColor="@color/white"
                 android:textSize="16dp"
-                android:drawablePadding="16dp"
                 android:textStyle="bold"
                 app:gb_backgroundColor="#F700FF"
                 app:gb_disabledTextColor="#B5B5B5"
@@ -113,13 +113,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                app:nb_disabledColor="@android:color/darker_gray"
+                app:nb_cornerRadius="30dp"
+                app:nb_disabledStateColor="@android:color/darker_gray"
                 app:nb_drawableEnd="@drawable/outline_thumb_up_24"
                 app:nb_drawablePadding="32dp"
                 app:nb_drawableStart="@drawable/outline_thumb_up_24"
+                app:nb_enableAnimationDuration="500"
                 app:nb_gradientEnd="#26FF00"
                 app:nb_gradientStart="#16FFEC"
-                app:nb_text="A Neon Button with Gradient" />
+                app:nb_text="A Neon Button with Gradient"
+                app:nb_textSize="16dp"
+                app:nb_textStyle="normal" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -130,29 +134,28 @@
                     android:id="@+id/btnNeonTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    app:nb_text="Add to Cart"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     app:nb_drawablePadding="16dp"
-                    app:nb_textStyle="bold"
                     app:nb_drawableStart="@drawable/outline_shopping_cart_24"
                     app:nb_gradientEnd="#FF002E"
-                    app:nb_gradientStart="#EAFF2A" />
+                    app:nb_gradientStart="#EAFF2A"
+                    app:nb_text="Add to Cart"
+                    app:nb_textStyle="bold" />
 
                 <com.smb.glowbutton.NeonButton
                     android:id="@+id/btnNeonThree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
                     app:nb_drawableEnd="@drawable/outline_edit_24"
                     app:nb_drawablePadding="16dp"
-                    app:nb_text="Edit Post"
-                    app:nb_gradientStart="#FF7CE9"
-                    app:nb_gradientEnd="#EE00FF"
-                    android:layout_weight="1" />
+                    app:nb_gradientEnd="#EEAFFF"
+                    app:nb_gradientStart="#C500E8"
+                    app:nb_text="Edit Post" />
 
             </LinearLayout>
-
 
         </LinearLayout>
 

@@ -23,10 +23,30 @@ class MainActivity : AppCompatActivity() {
 
         btnAddNewGlowButton.setOnClickListener {
 
-            val myGlowButton = GlowButton(this)
-            val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT,
-                ConstraintLayout.LayoutParams.WRAP_CONTENT)
+            val params = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
             params.setMargins(16, 8, 16, 0)
+
+            val myNeonButton = NeonButton(this)
+            myNeonButton.apply {
+                layoutParams = params
+                setCornerRadius(16)
+                enableAnimationDuration = 500L
+                text = "What a Button!"
+                setTextSize(16)
+                disabledStateColor = Color.GRAY
+                drawableTint = Color.YELLOW
+                setDrawableStart(R.drawable.baseline_face_24)
+                setDrawableEnd(R.drawable.baseline_face_24)
+                setDrawablePadding(24)
+                textStyle = Typeface.ITALIC
+                gradientStart = Color.MAGENTA
+                gradientEnd = Color.MAGENTA
+            }
+
+            val myGlowButton = GlowButton(this)
             myGlowButton.apply {
                 layoutParams = params
                 setCornerRadius(5)
@@ -45,7 +65,9 @@ class MainActivity : AppCompatActivity() {
                 textStyle = Typeface.BOLD_ITALIC
             }
 
+            viewHolder.addView(myNeonButton)
             viewHolder.addView(myGlowButton)
+            existingNeonButtons.add(myNeonButton)
             existingGlowButtons.add(myGlowButton)
         }
 
