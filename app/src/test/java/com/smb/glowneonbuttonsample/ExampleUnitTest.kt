@@ -1,4 +1,4 @@
-package com.smb.glowbuttonsample
+package com.smb.glowneonbuttonsample
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

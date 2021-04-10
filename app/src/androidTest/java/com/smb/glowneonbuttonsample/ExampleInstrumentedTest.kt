@@ -1,4 +1,4 @@
-package com.smb.glowbuttonsample
+package com.smb.glowneonbuttonsample
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

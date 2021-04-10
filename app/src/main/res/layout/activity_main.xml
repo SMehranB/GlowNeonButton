@@ -151,8 +151,8 @@
                     android:layout_weight="1"
                     app:nb_drawableEnd="@drawable/outline_edit_24"
                     app:nb_drawablePadding="16dp"
-                    app:nb_gradientEnd="#EEAFFF"
-                    app:nb_gradientStart="#C500E8"
+                    app:nb_gradientEnd="#DF2BFF"
+                    app:nb_gradientStart="#DF2BFF"
                     app:nb_text="Edit Post" />
 
             </LinearLayout>

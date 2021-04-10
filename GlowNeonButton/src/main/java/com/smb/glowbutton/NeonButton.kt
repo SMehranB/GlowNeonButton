@@ -83,7 +83,7 @@ class NeonButton : View {
     private var mTextY: Float = 0f
     private var mTextSize: Float = 0f
     private var mTextColorCurrent: Int = 0
-    var disabledStateColor = Color.GRAY
+    var disabledStateColor = Color.DKGRAY
 
     var text: String = "NEON BUTTON"
         set(value) {
@@ -260,7 +260,7 @@ class NeonButton : View {
             mTextSize = getDimension(R.styleable.NeonButton_nb_textSize, resources.getDimension(R.dimen.text_size))
             mTextColorCurrent = getInteger(R.styleable.NeonButton_nb_textColor, 0)
             textFont = getResourceId(R.styleable.NeonButton_nb_fontFamily, 0)
-            disabledStateColor = getInteger(R.styleable.NeonButton_nb_disabledStateColor, Color.LTGRAY)
+            disabledStateColor = getInteger(R.styleable.NeonButton_nb_disabledStateColor, Color.GRAY)
             mTextColorOriginal = mTextColorCurrent
 
             enableAnimationDuration = getInt(R.styleable.NeonButton_nb_enableAnimationDuration, 500).toLong()

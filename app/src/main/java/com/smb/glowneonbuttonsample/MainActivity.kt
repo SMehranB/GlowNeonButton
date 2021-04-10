@@ -1,4 +1,4 @@
-package com.smb.glowbuttonsample
+package com.smb.glowneonbuttonsample
 
 import android.graphics.Color
 import android.graphics.Typeface

@@ -8,7 +8,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.smb.glowbuttonsample"
+        applicationId "com.smb.glowneonbuttonsample"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 2
@@ -43,5 +43,5 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation project(":GlowButton")
+    implementation project(':GlowNeonButton')
 }
