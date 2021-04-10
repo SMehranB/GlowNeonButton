@@ -126,12 +126,13 @@ class NeonButton : View {
 
         with(strokePaint) {
             style = Paint.Style.STROKE
-            strokeWidth = 8f
-            color = Color.YELLOW
+            strokeWidth = 5f
+            color = Color.WHITE
             shader = strokeGradient
-            setShadowLayer(dpToPixel(14), 0f, 0f, Color.YELLOW)
+            setShadowLayer(dpToPixel(16), 0f, 0f, Color.YELLOW)
         }
 
+        canvas?.drawRoundRect(strokeRectF, dpToPixel(50), dpToPixel(50), strokePaint)
         canvas?.drawRoundRect(strokeRectF, dpToPixel(50), dpToPixel(50), strokePaint)
 
         if (drawableEnd != 0) {
