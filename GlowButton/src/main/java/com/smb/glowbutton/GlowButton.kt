@@ -86,7 +86,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
     //TEXT PROPERTIES
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG)
-    private var mTextAlpha: Int = 255
     private var mTextColorOriginal: Int = 0
     private var mTextX: Float = 0f
     private var mTextY: Float = 0f
@@ -177,7 +176,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         with(textPaint) {
             typeface = Typeface.create(getTypeFace(), textStyle)
             color = mTextColorCurrent
-            alpha = mTextAlpha
             isLinearText = false
             textAlign = Paint.Align.CENTER
             textSize = mTextSize
@@ -315,7 +313,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
         isEnabled = false
 
-        mTextAlpha = 180
         mTextColorCurrent = disabledTextColor
         glowRadius = 0f
 
@@ -325,7 +322,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
     fun enable(){
         isEnabled = true
 
-        mTextAlpha = 255
         mTextColorCurrent = mTextColorOriginal
         glowRadius = backgroundPadding
 
@@ -337,11 +333,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         isEnabled = false
 
         enableDisableAnimatorSet?.cancel()
-
-        val textAlpha = ValueAnimator.ofInt(255, 180)
-        textAlpha.addUpdateListener {
-            mTextAlpha = it.animatedValue as Int
-        }
 
         val textColor = ObjectAnimator.ofArgb(mTextColorOriginal, disabledTextColor)
         textColor.addUpdateListener {
@@ -357,7 +348,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         enableDisableAnimatorSet = AnimatorSet()
         with(enableDisableAnimatorSet!!){
             duration = glowAnimationDuration
-            playTogether(glow, textColor, textAlpha)
+            playTogether(glow, textColor)
             start()
         }
     }
@@ -366,11 +357,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         isEnabled = true
 
         enableDisableAnimatorSet?.cancel()
-
-        val textAlpha = ValueAnimator.ofInt(180, 255)
-        textAlpha.addUpdateListener {
-            mTextAlpha = it.animatedValue as Int
-        }
 
         val textColor = ObjectAnimator.ofArgb(disabledTextColor, mTextColorOriginal)
         textColor.addUpdateListener {
@@ -385,7 +371,7 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         enableDisableAnimatorSet = AnimatorSet()
         with(enableDisableAnimatorSet!!){
             duration = glowAnimationDuration
-            playTogether(glow, textColor, textAlpha)
+            playTogether(glow, textColor)
             start()
         }
     }

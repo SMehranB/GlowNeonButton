@@ -44,16 +44,18 @@
             <enum name="italic" value="2" />
             <enum name="bold_italic" value="3" />
         </attr>
-        <attr name="nb_disabledTextColor" format="color"/>
+        <attr name="nb_disabledColor" format="color"/>
 
         <attr name="nb_cornerRadius" format="dimension"/>
         <attr name="nb_gradientStart" format="color"/>
-        <attr name="nb_gradientFinish" format="color"/>
+        <attr name="nb_gradientEnd" format="color"/>
 
         <attr name="nb_drawableStart" format="reference"/>
         <attr name="nb_drawableEnd" format="reference"/>
         <attr name="nb_drawablePadding" format="dimension"/>
         <attr name="nb_drawableTint" format="color"/>
+
+        <attr name="nb_enableAnimationDuration" format="integer"/>
 
     </declare-styleable>
 

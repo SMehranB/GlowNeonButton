@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.smb.glowbutton.GlowButton
+import com.smb.glowbutton.NeonButton
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val existingGlowButtons = arrayListOf<GlowButton>(btnSampleOne, btnSampleTwo, btnSampleThree,btnSampleFour)
+        val existingNeonButtons = arrayListOf<NeonButton>(btnNeonOne, btnNeonTwo, btnNeonThree)
 
         btnAddNewGlowButton.setOnClickListener {
 
@@ -52,8 +54,14 @@ class MainActivity : AppCompatActivity() {
                 existingGlowButtons.forEach {
                     it.disableWithAnimation()
                 }
+                existingNeonButtons.forEach {
+                    it.disableWithAnimation()
+                }
             }else{
                 existingGlowButtons.forEach {
+                    it.enableWithAnimation()
+                }
+                existingNeonButtons.forEach {
                     it.enableWithAnimation()
                 }
             }
@@ -65,8 +73,14 @@ class MainActivity : AppCompatActivity() {
                 existingGlowButtons.forEach {
                     it.disable()
                 }
+                existingNeonButtons.forEach {
+                    it.disable()
+                }
             }else{
                 existingGlowButtons.forEach {
+                    it.enable()
+                }
+                existingNeonButtons.forEach {
                     it.enable()
                 }
             }

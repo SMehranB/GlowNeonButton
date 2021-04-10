@@ -1,59 +1,66 @@
 package com.smb.glowbutton
 
-import android.annotation.SuppressLint
+import android.animation.AnimatorSet
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.annotation.DrawableRes
 import androidx.annotation.FontRes
 import androidx.annotation.StyleRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.drawable.toBitmap
 
 class NeonButton : View {
-    constructor(context: Context): super(context){
+    constructor(context: Context) : super(context) {
         initializeAttributes(context, null)
     }
-    constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet){
+
+    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet) {
         initializeAttributes(context, attributeSet)
     }
 
 
+    private var enableAnimationDuration: Int = 500
+    private var textShadowRadius: Float = dpToPixel(5)
     private var textXOffSet: Float = 0f
     private val horizontalTextMargin: Float = dpToPixel(24)
     private val verticalTextMargin: Float = dpToPixel(16)
 
+    var enableDisableAnimatorSet: AnimatorSet? = null
+
     private lateinit var backgroundGradient: LinearGradient
     private lateinit var strokeGradient: LinearGradient
+
     @ColorInt
     var gradientStart: Int = 0
-    set(value) {
-        field = value
-        invalidate()
-    }
+        set(value) {
+            field = value
+            invalidate()
+        }
+
     @ColorInt
-    var gradientFinish: Int = 0
-    set(value) {
-        field = value
-        invalidate()
-    }
+    var gradientEnd: Int = 0
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     private val backgroundPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val strokeRectF: RectF = RectF()
     private var strokePadding = dpToPixel(16)
-    private var cornerRadius: Float = 0f
-    @ColorInt
-    var backColor: Int = Color.GREEN
-        set(value) {
-            field = value
-            invalidate()
-        }
-
+    var cornerRadius: Float = 0f
+    set(value) {
+        field = value
+        invalidate()
+    }
 
     //DRAWABLE PROPERTIES
     private val drawablePaint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -66,6 +73,7 @@ class NeonButton : View {
     private var drawableDimension = dpToPixel(25).toInt()
     private var drawableStart: Int = 0
     private var drawableEnd: Int = 0
+
     @ColorInt
     var drawableTint: Int = 0
         set(value) {
@@ -75,13 +83,12 @@ class NeonButton : View {
 
     //TEXT PROPERTIES
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.SUBPIXEL_TEXT_FLAG)
-    private var mTextAlpha: Int = 255
     private var mTextColorOriginal: Int = 0
     private var mTextX: Float = 0f
     private var mTextY: Float = 0f
     private var mTextSize: Float = 0f
     private var mTextColorCurrent: Int = 0
-    var disabledTextColor = Color.GRAY
+    var disabledColor = Color.GRAY
 
     var text: String = "NEON BUTTON"
         set(value) {
@@ -104,14 +111,13 @@ class NeonButton : View {
         }
 
 
-
     override fun onDraw(canvas: Canvas?) {
 
         setLayerType(LAYER_TYPE_SOFTWARE, textPaint)
 
         strokeRectF.set(strokePadding, strokePadding, width.minus(strokePadding), height.minus(strokePadding))
 
-        with(backgroundPaint){
+        with(backgroundPaint) {
             style = Paint.Style.FILL
             shader = backgroundGradient
         }
@@ -120,71 +126,47 @@ class NeonButton : View {
 
         with(strokePaint) {
             style = Paint.Style.STROKE
-            strokeWidth = 10f
+            strokeWidth = 8f
             color = Color.YELLOW
             shader = strokeGradient
-            setShadowLayer(dpToPixel(16), 0f, 0f, Color.YELLOW)
+            setShadowLayer(dpToPixel(14), 0f, 0f, Color.YELLOW)
         }
 
         canvas?.drawRoundRect(strokeRectF, dpToPixel(50), dpToPixel(50), strokePaint)
 
-        if(drawableEnd != 0) {
-//            drawablePaint.setShadowLayer(dpToPixel(10), 0f, 0f, gradientFinish)
-//            drawablePaint.shader = strokeGradient
+        if (drawableEnd != 0) {
             canvas?.drawBitmap(drawableRightBitmap, drawableEndX, drawableY, drawablePaint)
         }
 
-        if(drawableStart != 0) {
-//            drawablePaint.setShadowLayer(dpToPixel(10), 0f, 0f, gradientStart)
-//            drawablePaint.shader = strokeGradient
+        if (drawableStart != 0) {
             canvas?.drawBitmap(drawableLeftBitmap, drawableStartX, drawableY, drawablePaint)
         }
 
         //Drawing text
         with(textPaint) {
-            setShadowLayer(dpToPixel(5), 0f, 0f, mTextColorCurrent)
             typeface = Typeface.create(getTypeFace(), textStyle)
-            color = mTextColorCurrent
-            alpha = mTextAlpha
+            if (mTextColorCurrent != 0) {
+                color = mTextColorCurrent
+                setShadowLayer(textShadowRadius, 0f, 0f, mTextColorCurrent)
+            } else {
+                setShadowLayer(textShadowRadius, 0f, 0f, Color.WHITE)
+                color = Color.WHITE
+                shader = strokeGradient
+            }
             isLinearText = false
             textAlign = Paint.Align.CENTER
             textSize = mTextSize
-            shader = strokeGradient
         }
 
         canvas?.drawText(text, mTextX, mTextY, textPaint)
 
     }
 
-    @SuppressLint("DrawAllocation")
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
 
-        backgroundGradient = LinearGradient(
-            0f, height.times(2).toFloat(), dpToPixel(8),
-            height.minus(dpToPixel(60)), gradientStart, Color.TRANSPARENT, Shader.TileMode.CLAMP
-        )
-        strokeGradient = LinearGradient(0f, 0f, width.toFloat(), 0f, gradientStart, gradientFinish, Shader.TileMode.CLAMP)
+        setGradientParams(gradientStart, gradientEnd)
 
-
-        if(drawableStart != 0) {
-            val drawable = ContextCompat.getDrawable(context, drawableStart)!!
-            if (drawableTint != 0) {
-                drawable.setTint(drawableTint)
-            }
-            drawableLeftBitmap = drawable.toBitmap(drawableDimension, drawableDimension, Bitmap.Config.ARGB_8888)
-            drawableStartX = paddingStart + strokePadding + drawablePadding
-        }
-
-        if(drawableEnd != 0) {
-            val drawable = ContextCompat.getDrawable(context, drawableEnd)!!
-            if (drawableTint != 0) {
-                drawable.setTint(drawableTint)
-            }
-            drawableRightBitmap = drawable.toBitmap(drawableDimension, drawableDimension, Bitmap.Config.ARGB_8888)
-            drawableEndX = width - paddingEnd - strokePadding - drawablePadding - drawableDimension
-        }
-
-        drawableY = height.div(2f).minus(drawableDimension.div(2))
+        setDrawables(gradientStart, gradientEnd)
 
         val metrics = textPaint.fontMetrics
         mTextX = width.div(2).toFloat() + paddingStart - paddingEnd + textXOffSet
@@ -200,8 +182,10 @@ class NeonButton : View {
         val desiredWidth = minDimensions.width + paddingStart + paddingEnd
         val desiredHeight = minDimensions.height + paddingTop + paddingBottom
 
-        setMeasuredDimension(getFinalDimension(desiredWidth, widthMeasureSpec),
-            getFinalDimension(desiredHeight, heightMeasureSpec))
+        setMeasuredDimension(
+            getFinalDimension(desiredWidth, widthMeasureSpec),
+            getFinalDimension(desiredHeight, heightMeasureSpec)
+        )
     }
 
     private fun getMinDimensions(): MinimumDimensions {
@@ -226,7 +210,7 @@ class NeonButton : View {
         val mode = MeasureSpec.getMode(measureSpec)
         val size = MeasureSpec.getSize(measureSpec)
 
-        return when(mode){
+        return when (mode) {
             MeasureSpec.EXACTLY -> {
                 size
             }
@@ -244,12 +228,12 @@ class NeonButton : View {
         var width = 0f
         textXOffSet = 0f
 
-        if(drawableStart != 0 ){
+        if (drawableStart != 0) {
             width = width.plus(drawableDimension).plus(drawablePadding)
             textXOffSet = textXOffSet.plus(drawablePadding)
         }
 
-        if(drawableEnd != 0){
+        if (drawableEnd != 0) {
             width = width.plus(drawableDimension).plus(drawablePadding)
             textXOffSet = textXOffSet.minus(drawablePadding)
         }
@@ -257,16 +241,16 @@ class NeonButton : View {
         return width
     }
 
-    private fun initializeAttributes(context: Context, attributeSet: AttributeSet?){
+    private fun initializeAttributes(context: Context, attributeSet: AttributeSet?) {
 
-        val attr : TypedArray = context.theme.obtainStyledAttributes(attributeSet, R.styleable.NeonButton, 0, 0)
+        val attr: TypedArray = context.theme.obtainStyledAttributes(attributeSet, R.styleable.NeonButton, 0, 0)
 
-        with(attr){
+        with(attr) {
 
             //retrieving background attributes
             cornerRadius = getDimension(R.styleable.NeonButton_nb_cornerRadius, dpToPixel(100))
             gradientStart = getInteger(R.styleable.NeonButton_nb_gradientStart, Color.YELLOW)
-            gradientFinish = getInteger(R.styleable.NeonButton_nb_gradientFinish, Color.RED)
+            gradientEnd = getInteger(R.styleable.NeonButton_nb_gradientEnd, Color.RED)
 
             //retrieving drawable attributes
             drawableStart = getResourceId(R.styleable.NeonButton_nb_drawableStart, 0)
@@ -275,99 +259,143 @@ class NeonButton : View {
             drawableTint = getInteger(R.styleable.NeonButton_nb_drawableTint, 0)
 
             //retrieving text attributes
+            text = getString(R.styleable.NeonButton_nb_text) ?: "NEON BUTTON"
             textStyle = getInt(R.styleable.NeonButton_nb_textStyle, Typeface.NORMAL)
             mTextSize = getDimension(R.styleable.NeonButton_nb_textSize, resources.getDimension(R.dimen.text_size))
-            mTextColorCurrent = getInteger(R.styleable.NeonButton_nb_textColor, Color.YELLOW)
+            mTextColorCurrent = getInteger(R.styleable.NeonButton_nb_textColor, 0)
             textFont = getResourceId(R.styleable.NeonButton_nb_fontFamily, 0)
-            disabledTextColor = getInteger(R.styleable.NeonButton_nb_disabledTextColor, Color.LTGRAY)
+            disabledColor = getInteger(R.styleable.NeonButton_nb_disabledColor, Color.LTGRAY)
             mTextColorOriginal = mTextColorCurrent
 
-            text = getString(R.styleable.NeonButton_nb_text) ?: "NEON BUTTON"
+            enableAnimationDuration = getInt(R.styleable.NeonButton_nb_enableAnimationDuration, 500)
 
             recycle()
         }
     }
 
-/*
-    fun disable(){
+    fun setDrawableStart(@DrawableRes drawableRes: Int){
+        drawableStart = drawableRes
+        requestLayout()
+    }
 
+    fun setDrawableEnd(@DrawableRes drawableRes: Int){
+        drawableEnd = drawableRes
+        requestLayout()
+    }
+
+    fun setDrawablePadding(padding: Int){
+        drawablePadding = dpToPixel(padding)
+        requestLayout()
+    }
+
+    fun setTextSize(textSize: Int){
+        mTextSize = dpToPixel(textSize)
+        requestLayout()
+    }
+
+    @JvmName("setTextColor_nb")
+    fun setTextColor(@ColorInt color: Int){
+        mTextColorCurrent = color
+        mTextColorOriginal = color
+        invalidate()
+    }
+
+    fun disable() {
         isEnabled = false
 
-        mTextAlpha = 180
-        mTextColorCurrent = disabledTextColor
-        glowRadius = 0f
+        val startColor = ColorUtils.blendARGB(gradientStart, disabledColor, 0.7f)
+        val endColor = ColorUtils.blendARGB(gradientEnd, disabledColor, 0.7f)
+        setGradientParams(startColor, endColor)
+        setDrawables(startColor, endColor)
+
+        textShadowRadius = 0f
 
         invalidate()
     }
 
-    fun enable(){
+    fun enable() {
         isEnabled = true
 
-        mTextAlpha = 255
-        mTextColorCurrent = mTextColorOriginal
-        glowRadius = backgroundPadding
+        setGradientParams(gradientStart, gradientEnd)
+        setDrawables(gradientStart, gradientEnd)
+
+        textShadowRadius = dpToPixel(5)
 
         invalidate()
     }
 
-    fun disableWithAnimation(){
+    fun disableWithAnimation() {
 
         isEnabled = false
 
         enableDisableAnimatorSet?.cancel()
 
-        val textAlpha = ValueAnimator.ofInt(255, 180)
-        textAlpha.addUpdateListener {
-            mTextAlpha = it.animatedValue as Int
+        val startColorTarget = ColorUtils.blendARGB(gradientStart, disabledColor, 0.7f)
+        val endColorTarget = ColorUtils.blendARGB(gradientEnd, disabledColor, 0.7f)
+
+        var startColorCur = gradientStart
+        var endColorCur = gradientEnd
+
+        val glowStart = ValueAnimator.ofArgb(gradientStart, startColorTarget)
+        glowStart.addUpdateListener {
+            startColorCur = it.animatedValue as Int
+
+            setGradientParams(startColorCur, endColorCur)
+            setDrawables(startColorCur, endColorCur)
+
+            invalidate()
         }
 
-        val textColor = ObjectAnimator.ofArgb(mTextColorOriginal, disabledTextColor)
-        textColor.addUpdateListener {
-            mTextColorCurrent = it.animatedValue as Int
+        val glowEnd = ValueAnimator.ofArgb(gradientEnd, endColorTarget)
+        glowEnd.addUpdateListener {
+            endColorCur = it.animatedValue as Int
         }
 
-        val glow = ValueAnimator.ofFloat(glowRadius, 0f)
-        glow.addUpdateListener {
-            glowRadius = it.animatedValue as Float
-            postInvalidateOnAnimation()
-        }
+        textShadowRadius = 0f
 
         enableDisableAnimatorSet = AnimatorSet()
-        with(enableDisableAnimatorSet!!){
-            duration = glowAnimationDuration
-            playTogether(glow, textColor, textAlpha)
+        with(enableDisableAnimatorSet!!) {
+            duration = 500
+            playTogether(glowEnd, glowStart)
             start()
         }
     }
 
-    fun enableWithAnimation(){
+    fun enableWithAnimation() {
         isEnabled = true
 
         enableDisableAnimatorSet?.cancel()
 
-        val textAlpha = ValueAnimator.ofInt(180, 255)
-        textAlpha.addUpdateListener {
-            mTextAlpha = it.animatedValue as Int
+        val startColorTarget = ColorUtils.blendARGB(gradientStart, disabledColor, 0.7f)
+        val endColorTarget = ColorUtils.blendARGB(gradientEnd, disabledColor, 0.7f)
+
+        var startColorCur = gradientStart
+        var endColorCur = gradientEnd
+
+        val glowStart = ValueAnimator.ofInt(startColorTarget, gradientStart)
+        glowStart.addUpdateListener {
+            startColorCur = it.animatedValue as Int
+
+            setGradientParams(startColorCur, endColorCur)
+            setDrawables(startColorCur, endColorCur)
+
+            invalidate()
         }
 
-        val textColor = ObjectAnimator.ofArgb(disabledTextColor, mTextColorOriginal)
-        textColor.addUpdateListener {
-            mTextColorCurrent = it.animatedValue as Int
+        val glowEnd = ValueAnimator.ofInt(endColorTarget, gradientEnd)
+        glowEnd.addUpdateListener {
+            endColorCur = it.animatedValue as Int
         }
 
-        val glow = ValueAnimator.ofFloat(0f, backgroundPadding)
-        glow.addUpdateListener {
-            glowRadius = it.animatedValue as Float
-            postInvalidateOnAnimation()
-        }
+        textShadowRadius = dpToPixel(5)
+
         enableDisableAnimatorSet = AnimatorSet()
-        with(enableDisableAnimatorSet!!){
-            duration = glowAnimationDuration
-            playTogether(glow, textColor, textAlpha)
+        with(enableDisableAnimatorSet!!) {
+            duration = enableAnimationDuration.toLong()
+            playTogether(glowEnd, glowStart)
             start()
         }
     }
-*/
 
     private fun dpToPixel(dp: Int): Float {
         return dp.times(resources.displayMetrics.density)
@@ -375,11 +403,42 @@ class NeonButton : View {
 
     private fun getTypeFace(): Typeface {
         var tf = Typeface.DEFAULT
-        if(textFont != 0){
+        if (textFont != 0) {
             tf = ResourcesCompat.getFont(context, textFont)
         }
 
         return tf
+    }
+
+    private fun setGradientParams(startColor: Int, endColor: Int) {
+        backgroundGradient = LinearGradient(
+            0f, height.times(2).toFloat(), 0f,
+            height.minus(dpToPixel(50)), startColor, Color.TRANSPARENT, Shader.TileMode.CLAMP
+        )
+        strokeGradient = LinearGradient(0f, 0f, width.toFloat(), 0f, startColor, endColor, Shader.TileMode.CLAMP)
+    }
+    private fun setDrawables(tintStartColor: Int, tintEndColor: Int) {
+        if (drawableStart != 0) {
+            val drawable = ContextCompat.getDrawable(context, drawableStart)!!
+            drawable.setTint(tintStartColor)
+            if (drawableTint != 0) {
+                drawable.setTint(drawableTint)
+            }
+            drawableLeftBitmap = drawable.toBitmap(drawableDimension, drawableDimension, Bitmap.Config.ARGB_8888)
+            drawableStartX = paddingStart + strokePadding + drawablePadding
+        }
+
+        if (drawableEnd != 0) {
+            val drawable = ContextCompat.getDrawable(context, drawableEnd)!!
+            drawable.setTint(tintEndColor)
+            if (drawableTint != 0) {
+                drawable.setTint(drawableTint)
+            }
+            drawableRightBitmap = drawable.toBitmap(drawableDimension, drawableDimension, Bitmap.Config.ARGB_8888)
+            drawableEndX = width - paddingEnd - strokePadding - drawablePadding - drawableDimension
+        }
+
+        drawableY = height.div(2f).minus(drawableDimension.div(2))
     }
 
     private data class MinimumDimensions(val width: Int, val height: Int)
