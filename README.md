@@ -1,6 +1,6 @@
-# GlowButton
+# GlowButton & NeonButton
 
-## A cool glowing button with animated properties 
+## Cool Glowing Button and Neon Button with animated properties 
  
 # What's new
  In version [![](https://jitpack.io/v/SMehranB/GlowButton.svg)](https://jitpack.io/#SMehranB/GlowButton)
