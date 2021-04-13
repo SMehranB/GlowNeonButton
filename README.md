@@ -35,7 +35,7 @@
 ## Screen recording
  
  <img src="./glow_button_recording.gif" height="100">    <img src="./neon_button_recording.gif" height="300">
- <img src="./screen_recording.gif" height="720">
+ <img src="./screen_recording.gif" height="720">    <img src="./screen_recording2.gif" height="720">
  
 # Install
  
@@ -51,7 +51,7 @@ allprojects {
 
 ```
 dependencies {
-	 implementation 'com.github.SMehranB:GlowButton:1.1.0'
+	 implementation 'com.github.SMehranB:GlowButton:2.0.0'
 }
 ```
 ## Maven
@@ -59,7 +59,7 @@ dependencies {
 <dependency>
 	<groupId>com.github.SMehranB</groupId>
 	<artifactId>GlowButton</artifactId>
-	<version>1.1.0</version>
+	<version>2.0.0</version>
 </dependency>
  ```
 # Use
