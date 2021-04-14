@@ -1,6 +1,6 @@
-# GlowButton
+# GlowButton & NeonButton
 
-## A cool glowing button with animated properties 
+## Cool Glowing Button and Neon Button with animated properties 
  
 # What's new
  In version [![](https://jitpack.io/v/SMehranB/GlowButton.svg)](https://jitpack.io/#SMehranB/GlowButton)
@@ -34,8 +34,8 @@
 
 ## Screen recording
  
- <img src="./glow_button_recording.gif" height="100">    <img src="./neon_button_recording.gif" height="300">
- <img src="./screen_recording.gif" height="720">    <img src="./screen_recording2.gif" height="720">
+ <img src="./glow_button_recording.gif" height="100">    <img src="./neon_button_recording.gif" height="200">
+ <img src="./screen_recording.gif" height="720">
  
 # Install
  
