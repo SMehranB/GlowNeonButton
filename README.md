@@ -39,7 +39,7 @@
  
 # Install
  
-```
+```groovy
 allprojects {
 	repositories {
 		...
@@ -49,13 +49,13 @@ allprojects {
 ```
 ## Gradle
 
-```
+```groovy
 dependencies {
 	 implementation 'com.github.SMehranB:GlowButton:2.0.0'
 }
 ```
 ## Maven
-```
+```xml
 <dependency>
 	<groupId>com.github.SMehranB</groupId>
 	<artifactId>GlowButton</artifactId>
