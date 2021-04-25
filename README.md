@@ -4,7 +4,6 @@
  
 # What's new
  In version [![](https://jitpack.io/v/SMehranB/GlowButton.svg)](https://jitpack.io/#SMehranB/GlowButton)
-            
  
  •  You can set drawableStart and drawableEnd
  
@@ -39,7 +38,7 @@
  
 # Install
  
-```
+```groovy
 allprojects {
 	repositories {
 		...
@@ -49,17 +48,17 @@ allprojects {
 ```
 ## Gradle
 
-```
+```groovy
 dependencies {
-	 implementation 'com.github.SMehranB:GlowButton:2.0.0'
+	 implementation 'com.github.SMehranB:GlowButton:2.0.1'
 }
 ```
 ## Maven
-```
+```groovy
 <dependency>
 	<groupId>com.github.SMehranB</groupId>
 	<artifactId>GlowButton</artifactId>
-	<version>2.0.0</version>
+	<version>2.0.1</version>
 </dependency>
  ```
 # Use
@@ -74,29 +73,29 @@ dependencies {
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
     android:layout_marginTop="8dp"
-    android:drawableStart="@drawable/outline_thumb_up_24"
-    android:drawableEnd="@drawable/outline_thumb_down_off_alt_20"
-    android:drawablePadding="24dp"
-    android:drawableTint="@color/black"
-    android:text="I am a Glow Button"
-    android:textColor="@color/black"
-    android:textSize="16dp"
-    app:disabledTextColor="#808080"
+    app:gb_drawableStart="@drawable/outline_thumb_up_24"
+    app:gb_drawableEnd="@drawable/outline_thumb_down_off_alt_20"
+    app:gb_drawablePadding="50dp"
+    app:gb_drawableTint="@color/black"
+    app:gb_text="I'm confused"
+    app:gb_textColor="@color/black"
+    app:gb_textSize="16dp"
     app:gb_backgroundColor="#FFE600"
+    app:gb_cornerRadius="15dp"
+    app:gb_disabledTextColor="#808080"
     app:gb_glowAnimationDuration="500"
     app:gb_glowColor="#FFE600"
-    app:gb_cornerRadius="15dp"
     app:gb_rippleAnimationDuration="1500"
     app:gb_rippleColor="@color/purple_500"
     app:gb_rippleEnabled="true" />
 
 <!--Some info on the custom attributes
-    android:textSize="24dp" //Default size is 16dp (because I don't like sp. Don't judge me!)
+    app:gb_textSize="24dp" //Default size is 16dp (because I don't like sp. Don't judge me!)
     app:gb_rippleColor="@color/purple_500" //Default ripple color is a darker shade of the background color
     app:gb_rippleEnabled="true" //Default value is true (because who doesn't like ripples?!)
     app:gb_cornerRadius="10dp" //By default, the button has completely round corners 
     app:gb_glowColor="#FFE600" /> //Default value is the same color as the background (because...logic!)
-    android:drawablePadding="24dp" //Default value is 8dp
+    app:gb_drawablePadding="24dp" //Default value is 8dp
 End-->
  ```
 

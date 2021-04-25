@@ -127,20 +127,20 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
             glowAnimationDuration = getInteger(R.styleable.GlowButton_gb_glowAnimationDuration, 500).toLong()
 
             //retrieving drawable attributes
-            drawableStart = getResourceId(R.styleable.GlowButton_android_drawableStart, 0)
-            drawableEnd = getResourceId(R.styleable.GlowButton_android_drawableEnd, 0)
-            drawablePadding = getDimension(R.styleable.GlowButton_android_drawablePadding, dpToPixel(8))
-            drawableTint = getInteger(R.styleable.GlowButton_android_drawableTint, 0)
+            drawableStart = getResourceId(R.styleable.GlowButton_gb_drawableStart, 0)
+            drawableEnd = getResourceId(R.styleable.GlowButton_gb_drawableEnd, 0)
+            drawablePadding = getDimension(R.styleable.GlowButton_gb_drawablePadding, dpToPixel(8))
+            drawableTint = getInteger(R.styleable.GlowButton_gb_drawableTint, 0)
 
             //retrieving text attributes
-            textStyle = getInt(R.styleable.GlowButton_android_textStyle, Typeface.NORMAL)
-            mTextSize = getDimension(R.styleable.GlowButton_android_textSize, resources.getDimension(R.dimen.text_size))
-            mTextColorCurrent = getInteger(R.styleable.GlowButton_android_textColor, Color.BLACK)
-            textFont = getResourceId(R.styleable.GlowButton_android_fontFamily, 0)
+            textStyle = getInt(R.styleable.GlowButton_gb_textStyle, Typeface.NORMAL)
+            mTextSize = getDimension(R.styleable.GlowButton_gb_textSize, resources.getDimension(R.dimen.text_size))
+            mTextColorCurrent = getInteger(R.styleable.GlowButton_gb_textColor, Color.BLACK)
+            textFont = getResourceId(R.styleable.GlowButton_gb_fontFamily, 0)
             disabledTextColor = getInteger(R.styleable.GlowButton_gb_disabledTextColor, Color.GRAY)
             mTextColorOriginal = mTextColorCurrent
 
-            text = getString(R.styleable.GlowButton_android_text) ?: "GLOW BUTTON"
+            text = getString(R.styleable.GlowButton_gb_text) ?: "GLOW BUTTON"
 
             //retrieving ripple effect attributes
             rippleColor = getInteger(R.styleable.GlowButton_gb_rippleColor, ColorUtils.blendARGB(backColor, Color.BLACK, 0.5f))
@@ -149,6 +149,8 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
 
             recycle()
         }
+
+        setLayerType(LAYER_TYPE_SOFTWARE, backgroundPaint)
     }
 
     override fun onDraw(canvas: Canvas?) {
@@ -159,7 +161,6 @@ class GlowButton @JvmOverloads constructor(context: Context, attributeSet: Attri
         with(backgroundPaint) {
             color = backColor
             setShadowLayer(glowRadius.times(1f), 0f, 0f, glowColor)
-            setLayerType(LAYER_TYPE_SOFTWARE, this)
         }
 
         canvas?.drawRoundRect(backgroundRectF, cornerRadius, cornerRadius, backgroundPaint)

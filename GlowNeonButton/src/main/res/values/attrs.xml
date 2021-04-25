@@ -3,11 +3,11 @@
 
     <declare-styleable name="GlowButton">
 
-        <attr name="android:text" format="string" />
-        <attr name="android:textSize" format="dimension" />
-        <attr name="android:textColor" format="color"/>
-        <attr name="android:fontFamily" format="integer"/>
-        <attr name="android:textStyle" format="enum">
+        <attr name="gb_text" format="string" />
+        <attr name="gb_textSize" format="dimension" />
+        <attr name="gb_textColor" format="color"/>
+        <attr name="gb_fontFamily" format="integer"/>
+        <attr name="gb_textStyle" format="enum">
             <enum name="normal" value="0" />
             <enum name="bold" value="1" />
             <enum name="italic" value="2" />
@@ -25,10 +25,10 @@
         <attr name="gb_rippleColor" format="color"/>
         <attr name="gb_rippleAnimationDuration" format="integer"/>
 
-        <attr name="android:drawableStart" format="reference"/>
-        <attr name="android:drawableEnd" format="reference"/>
-        <attr name="android:drawablePadding" format="dimension"/>
-        <attr name="android:drawableTint" format="color"/>
+        <attr name="gb_drawableStart" format="reference"/>
+        <attr name="gb_drawableEnd" format="reference"/>
+        <attr name="gb_drawablePadding" format="dimension"/>
+        <attr name="gb_drawableTint" format="color"/>
 
     </declare-styleable>
 

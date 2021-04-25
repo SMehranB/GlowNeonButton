@@ -108,7 +108,6 @@ class NeonButton : View {
 
     override fun onDraw(canvas: Canvas?) {
 
-        setLayerType(LAYER_TYPE_SOFTWARE, textPaint)
 
         strokeRectF.set(strokePadding, strokePadding, width.minus(strokePadding), height.minus(strokePadding))
 
@@ -126,6 +125,7 @@ class NeonButton : View {
             shader = strokeGradient
             setShadowLayer(dpToPixel(16), 0f, 0f, Color.YELLOW)
         }
+
 
         canvas?.drawRoundRect(strokeRectF, cornerRadius, cornerRadius, strokePaint)
         canvas?.drawRoundRect(strokeRectF, cornerRadius, cornerRadius, strokePaint)
@@ -267,6 +267,8 @@ class NeonButton : View {
 
             recycle()
         }
+
+        setLayerType(LAYER_TYPE_SOFTWARE, textPaint)
     }
 
     fun setCornerRadius(radius: Int){
