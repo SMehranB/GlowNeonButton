@@ -54,7 +54,7 @@ dependencies {
 }
 ```
 ## Maven
-```groovy
+```xml
 <dependency>
 	<groupId>com.github.SMehranB</groupId>
 	<artifactId>GlowButton</artifactId>
