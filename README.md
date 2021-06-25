@@ -50,14 +50,14 @@ allprojects {
 
 ```groovy
 dependencies {
-	 implementation 'com.github.SMehranB:GlowButton:2.0.1'
+	 implementation 'com.github.SMehranB:GlowNeonButton:2.0.1'
 }
 ```
 ## Maven
 ```xml
 <dependency>
 	<groupId>com.github.SMehranB</groupId>
-	<artifactId>GlowButton</artifactId>
+	<artifactId>GlowNeonButton</artifactId>
 	<version>2.0.1</version>
 </dependency>
  ```
